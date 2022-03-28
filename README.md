@@ -1,4 +1,4 @@
-# Go-Dispatch-Bootcamp
+# 2022 Q2 Go Bootcamp
 
 ## Introduction
 
@@ -54,7 +54,7 @@ We provide the delivery dates so you can plan accordingly; please take this chal
 
 For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, contact the mentors and peers to get help on time. Feel free to use the slack channel available.
 
-## First Deliverable (due January 28th 23:59PM)
+## First Deliverable (due Friday May 13th, 23:59PM)
 
 Based on the self-study material and mentorship covered until this deliverable, we suggest you perform the following:
 
@@ -77,7 +77,7 @@ Based on the self-study material and mentorship covered until this deliverable, 
 
 > Note: what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more or fewer items if necessary. However, if you deliver fewer items at this point, you have to cover the remaining tasks in the next deliverable.
 
-## Second Deliverable (due February 7th 23:59PM)
+## Second Deliverable (due Monday May 23rd, 23:59PM)
 
 Based on the self-study material and mentorship covered until this deliverable, we suggest you perform the following:
 
@@ -90,7 +90,7 @@ Based on the self-study material and mentorship covered until this deliverable, 
 
 > Note: what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more or fewer items if necessary. However, if you deliver fewer items at this point, you have to cover the remaining tasks in the next deliverable.
 
-## Final Deliverable (due February 14th 23:59PM)
+## Final Deliverable (due Friday June 3rd, 23:59PM)
 
 - Add a new endpoint
 - The endpoint must read items from the CSV concurrently using a worker pool
@@ -118,7 +118,7 @@ items_per_workers: Is an Int and is the amount of valid items the worker should 
 For submitting your work, you should follow these steps:
 
 1. Create a pull request with your code, targeting the master branch of your fork.
-2. Fill this [form](https://forms.gle/C8vu8DojT1Amd7oJ7) including the PR’s url
+2. Fill this [form](https://forms.gle/urV6szfnCVMqp4UL9) including the PR’s url
 3. Stay tune for feedback
 4. Do the changes according to the reviewer's comments
 
