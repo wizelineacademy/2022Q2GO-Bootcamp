@@ -77,7 +77,7 @@ Based on the self-study material and mentorship covered until this deliverable, 
 
 > Note: what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more or fewer items if necessary. However, if you deliver fewer items at this point, you have to cover the remaining tasks in the next deliverable.
 
-## Second Deliverable (due Monday May 23rd, 23:59PM)
+## Second Deliverable (due Friday May 27th, 23:59PM)
 
 Based on the self-study material and mentorship covered until this deliverable, we suggest you perform the following:
 
@@ -90,7 +90,7 @@ Based on the self-study material and mentorship covered until this deliverable, 
 
 > Note: what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more or fewer items if necessary. However, if you deliver fewer items at this point, you have to cover the remaining tasks in the next deliverable.
 
-## Final Deliverable (due Friday June 3rd, 23:59PM)
+## 3rd Deliverable (due Monday June 6th, 9:00AM)
 
 - Add a new endpoint
 - The endpoint must read items from the CSV concurrently using a worker pool
@@ -111,7 +111,10 @@ items_per_workers: Is an Int and is the amount of valid items the worker should 
   - EOF
   - Valid items completed
 
-> Important: this is the final deliverable, so all the requirements must be included. We will give you feedback on October 18th. You will have 2 days more to apply changes. On October 20th, we will stop receiving changes at 11:00 am.
+> Important: In this deliverable all the requirements must be included. You will have 2 more days to make final changes and improve your project based on the feedback provided by your mentor, so you can submit your final project on Wednesday June 8th
+
+## Final Deliverable (due Wednesday June 8th, 2:00PM)
+> Important: this is the final deliverable, so all the requirements must be included.
 
 ## Submitting the deliverables
 
