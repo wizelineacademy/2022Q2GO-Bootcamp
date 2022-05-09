@@ -15,7 +15,7 @@ type HomeResponse struct {
 func HomeHandler(s server.Server) http.HandlerFunc {
 	//W will send the response
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Add("Content-Type", "application/json")
 		//Http response
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(HomeResponse{

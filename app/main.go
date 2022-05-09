@@ -42,4 +42,5 @@ func BindRoutes(s server.Server, r *mux.Router) {
 	//Create a new hub
 	r.HandleFunc("/", handlers.HomeHandler(s)).Methods(http.MethodGet)
 	r.HandleFunc("/characters", handlers.ListCharacterHandler(s)).Methods(http.MethodGet)
+	r.HandleFunc("/readCsv", handlers.ReadCsvHandler(s)).Methods(http.MethodGet)
 }
