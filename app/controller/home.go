@@ -1,4 +1,4 @@
-package handlers
+package controller
 
 import (
 	"encoding/json"
@@ -10,7 +10,18 @@ type HomeResponse struct {
 	Status  bool   `json:"status"`
 }
 
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+type controller struct {
+}
+
+type HomeController interface {
+	Home(response http.ResponseWriter, request *http.Request)
+}
+
+func NewHomeController() HomeController {
+	return &controller{}
+}
+
+func (*controller) Home(w http.ResponseWriter, r *http.Request) {
 	//W will send the response
 	w.Header().Add("Content-Type", "application/json")
 	//Http response
