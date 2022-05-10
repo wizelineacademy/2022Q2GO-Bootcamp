@@ -7,6 +7,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/luischitala/2022Q2GO-Bootcamp/controller"
 	infrastructure "github.com/luischitala/2022Q2GO-Bootcamp/infrastructure/router"
+	"github.com/luischitala/2022Q2GO-Bootcamp/repository"
+	"github.com/luischitala/2022Q2GO-Bootcamp/usecase"
 )
 
 func main() {
@@ -16,38 +18,23 @@ func main() {
 
 	}
 	const port string = ":5050"
+
+	//Repositories
+	rcsv := repository.NewCsvRepository()
 	//Router
 	r := mux.NewRouter()
 	router := infrastructure.NewMuxRouter(r)
 
+	//Use cases
+	cu := usecase.NewCharacterUseCase(rcsv)
+
 	//Controller
 	hc := controller.NewHomeController()
+	cc := controller.NewCharacterController(cu)
 
 	//Routes
 	router.GET("/", hc.Home)
+	router.GET("/characters", cc.ListCharacter)
+	router.GET("/readCsv", cc.ReadCsv)
 	router.SERVE(port)
 }
-
-// func BindRoutes(s server.Server, r *mux.Router) {
-
-// 	//To bypass the middleware
-
-// 	//Create a new hub
-// 	r.HandleFunc("/", handlers.HomeHandler(s)).Methods(http.MethodGet)
-// 	r.HandleFunc("/characters", handlers.ListCharacterHandler(s)).Methods(http.MethodGet)
-// 	r.HandleFunc("/readCsv", handlers.ReadCsvHandler(s)).Methods(http.MethodGet)
-// }
-
-// PORT := os.Getenv("PORT")
-// JWT_SECRET := os.Getenv("JWT_SECRET")
-// DATABASE_URL := os.Getenv("DATABASE_URL")
-
-// s, err := server.NewServer(context.Background(), &server.Config{
-// 	JWTSecret:   JWT_SECRET,
-// 	Port:        PORT,
-// 	DatabaseUrl: DATABASE_URL,
-// })
-// if err != nil {
-// 	log.Fatal(err)
-// }
-// s.Start(BindRoutes)

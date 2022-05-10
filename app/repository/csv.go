@@ -9,12 +9,19 @@ type Reader interface {
 	ReadCsvFile() (*os.File, error)
 }
 
-// Csv - interface that concatenates all repository interfaces
 type Csv interface {
 	Reader
 }
 
-func ReadCsvFile() (*os.File, error) {
+//Chain struct to separate logic between the next layer
+type csvr struct {
+}
+
+func NewCsvRepository() Csv {
+	return &csvr{}
+}
+
+func (c *csvr) ReadCsvFile() (*os.File, error) {
 	csvFile, err := os.Open("files/characters.csv")
 	if err != nil {
 		fmt.Println(err)

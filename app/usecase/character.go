@@ -17,12 +17,18 @@ type Reader interface {
 	ReadCsv() ([]models.Character, error)
 }
 
-//Struct that separate the logic between the repository and the superior layers
+//Chain struct to separate logic between the next layer
 type rs struct {
 	Csv repository.Csv
 }
 
-func ReadCsv(r *rs) ([]models.Character, error) {
+func NewCharacterUseCase(rcsv repository.Csv) Character {
+	return &rs{
+		rcsv,
+	}
+}
+
+func (r *rs) ReadCsv() ([]models.Character, error) {
 	characters := make([]models.Character, 0)
 	csvFile, err := r.Csv.ReadCsvFile()
 	if err != nil {
