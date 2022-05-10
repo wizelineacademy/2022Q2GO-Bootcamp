@@ -1,9 +1,14 @@
 package main
 
 import (
-	"wizeline/ghibli/adapters/csv"
+	"log"
+	"net/http"
+	"wizeline/ghibli/adapters/controllers"
 )
 
 func main() {
-	csv.ReadCSVFile("data/ghibli.csv")
+	router := http.NewServeMux()
+	router.HandleFunc("/films", controllers.GetFilms)
+
+	log.Fatal(http.ListenAndServe(":8009", router))
 }

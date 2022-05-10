@@ -2,27 +2,10 @@ package csv
 
 import (
 	"encoding/csv"
-	"errors"
-	"fmt"
 	"io"
 	"os"
-	"strconv"
 	e "wizeline/ghibli/entities"
 )
-
-func toFilm(record map[string]string) (e.Film, error) {
-	id, err := strconv.Atoi(record["id"])
-	if err != nil {
-		return e.Film{}, errors.New("Non integer id")
-	}
-
-	return e.Film{
-		ID: id,
-		Title: record["title"],
-		Director: record["director"],
-		ReleaseDate: record["release_date"],
-	}, nil;
-}
 
 func newMap[K comparable, V any](keys []K, vals []V ) (record map[K]V) {
 	record = make(map[K]V, len(keys))
@@ -32,18 +15,34 @@ func newMap[K comparable, V any](keys []K, vals []V ) (record map[K]V) {
 	return
 }
 
-func ReadCSVFile(path string) {
-	f, _ := os.Open(path)
+func ReadFilms(path string) ([]e.Film, error) {
+	films := make([]e.Film, 0)
+	f, err := os.Open(path)
+	if err != nil {
+		return films, err
+	}
+
 	c := csv.NewReader(f)
-	keys, _ := c.Read()
+	keys, err := c.Read()
+	if err != nil {
+		return films, err
+	}
 
 	for {
-		r, e := c.Read()
-		if e == io.EOF {
+		r, err := c.Read()
+		if err == io.EOF {
 			break
 		}
+		if err !=  nil {
+			return films, err
+		}
 
-		film, _ := toFilm(newMap(keys, r))
-		fmt.Println(film)
+		film, err := e.ToFilm(newMap(keys, r))
+		if err != nil {
+			return films, err
+		}
+
+		films = append(films, film)
 	}
+	return films, nil
 }
