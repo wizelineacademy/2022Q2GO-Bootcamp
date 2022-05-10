@@ -8,7 +8,7 @@ import (
 
 func main() {
 	router := http.NewServeMux()
-	router.HandleFunc("/films", controllers.GetFilms)
+	router.HandleFunc("/films", controllers.ServeFilms)
 
 	log.Fatal(http.ListenAndServe(":8009", router))
 }
