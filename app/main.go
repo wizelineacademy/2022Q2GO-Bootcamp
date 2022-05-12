@@ -4,23 +4,29 @@ import (
 	"log"
 
 	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
+	"github.com/luischitala/2022Q2GO-Bootcamp/config"
 	"github.com/luischitala/2022Q2GO-Bootcamp/controller"
+	"github.com/luischitala/2022Q2GO-Bootcamp/database"
 	infrastructure "github.com/luischitala/2022Q2GO-Bootcamp/infrastructure/router"
 	"github.com/luischitala/2022Q2GO-Bootcamp/repository"
 	"github.com/luischitala/2022Q2GO-Bootcamp/usecase"
 )
 
 func main() {
-	err := godotenv.Load(".env")
+	// Configuration
+	c, err := config.NewConfig()
 	if err != nil {
-		log.Fatal("Error loading .env file")
-
+		log.Fatal(err)
 	}
-	const port string = ":5050"
-
 	//Repositories
 	rcsv := repository.NewCsvRepository()
+	// Database
+	repo, err := database.NewPostgresRepository(c.DatabaseUrl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	repository.SetRepository(repo)
+
 	//Router
 	r := mux.NewRouter()
 	router := infrastructure.NewMuxRouter(r)
@@ -36,5 +42,5 @@ func main() {
 	router.GET("/", hc.Home)
 	router.GET("/characters", cc.ListCharacter)
 	router.GET("/readCsv", cc.ReadCsv)
-	router.SERVE(port)
+	router.SERVE(c.Port)
 }

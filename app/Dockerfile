@@ -29,6 +29,8 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 COPY .env ./
 
+COPY /files/characters.csv ./files/characters.csv
+
 COPY --from=builder /go-bootcamp /go-bootcamp
 
 EXPOSE 5050

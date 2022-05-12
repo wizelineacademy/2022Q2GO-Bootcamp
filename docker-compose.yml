@@ -1,26 +1,35 @@
 version: '3.4'
 
 services:
+  db:
+    container_name: db
+    build: app/database
+    ports:
+      - 54321:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - go-bootcamp
   app:
     build: app/
     restart: on-failure
     tty: true
     stdin_open: true
-    network_mode: bridge
+    depends_on:
+      - db
     env_file:
       - app/.env
+    networks:
+      - go-bootcamp
     ports:
       - 5050:5050
     volumes:
       - .:/usr/src/app/
-  db:
-    build: app/database
-    network_mode: bridge
-    ports:
-      - 54321:5432
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+
 
 volumes:
   postgres_data:
 
+networks:
+  go-bootcamp:
+    driver: bridge
