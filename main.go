@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"strconv"
 )
@@ -43,9 +45,19 @@ func readFile(fileName string) []data {
 	return items
 }
 
+func viewHandler(writer http.ResponseWriter, request *http.Request) {
+	lines := fmt.Sprint(readFile("csvfile.csv"))
+	message := []byte(lines)
+	_, err := writer.Write(message)
+	if err != nil {
+		log.Fatal()
+	}
+}
+
 func main() {
 
-	// Call read csv file
-	readLines := readFile("csvfile.csv")
-	fmt.Println(readLines)
+	http.HandleFunc("/readcsvfile", viewHandler)
+	err := http.ListenAndServe("localhost:8080", nil)
+	log.Fatal(err)
+
 }
