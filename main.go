@@ -1,13 +1,30 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"os"
 )
 
-func readFile(fileName string) []string {
-	lines := make([]string, 3)
-	fmt.Println("TODO Open and read file, then return slice of lines")
-	return lines
+type data struct {
+	Index string
+	Item  string
+}
+
+func readFile(fileName string) [][]string {
+	csvFile, err := os.Open(fileName)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer csvFile.Close()
+
+	csvLines, err := csv.NewReader(csvFile).ReadAll()
+	if err != nil {
+		fmt.Println()
+	}
+
+	return csvLines
 }
 
 func main() {
