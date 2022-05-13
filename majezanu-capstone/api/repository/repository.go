@@ -43,7 +43,7 @@ func FetchPokemonDataById(idToSearch int) (data models.Pokemon, err error) {
 	defer csvFile.Close()
 
 	csvReader := csv.NewReader(csvFile)
-
+	notFound := false
 	for {
 		line, err := csvReader.Read()
 		if err == io.EOF {
@@ -56,19 +56,20 @@ func FetchPokemonDataById(idToSearch int) (data models.Pokemon, err error) {
 		if err != nil {
 			break
 		}
+
 		if id == idToSearch {
 			data = models.Pokemon{
 				Id:   id,
 				Name: line[1],
 			}
+			err = nil
 			break
 		}
+		notFound = true
 	}
-
-	if data.Id != idToSearch {
+	if notFound {
 		err = errors.New("There is no pokemon with id")
 	}
-
 	return
 }
 
@@ -80,7 +81,7 @@ func FetchPokemonDataByName(nameToSearch string) (data models.Pokemon, err error
 	defer csvFile.Close()
 
 	csvReader := csv.NewReader(csvFile)
-
+	notFound := false
 	for {
 		line, err := csvReader.Read()
 		if err == io.EOF {
@@ -101,9 +102,9 @@ func FetchPokemonDataByName(nameToSearch string) (data models.Pokemon, err error
 			}
 			break
 		}
+		notFound = true
 	}
-
-	if data.Name != nameToSearch {
+	if notFound {
 		err = errors.New("There is no pokemon with name")
 	}
 
