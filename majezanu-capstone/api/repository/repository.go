@@ -62,7 +62,7 @@ func FetchPokemonDataById(idToSearch int) (data models.Pokemon, err error) {
 				Id:   id,
 				Name: line[1],
 			}
-			err = nil
+			notFound = false
 			break
 		}
 		notFound = true
@@ -100,6 +100,7 @@ func FetchPokemonDataByName(nameToSearch string) (data models.Pokemon, err error
 				Id:   id,
 				Name: line[1],
 			}
+			notFound = false
 			break
 		}
 		notFound = true
