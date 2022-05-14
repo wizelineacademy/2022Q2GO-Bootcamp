@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -42,20 +43,24 @@ func ReadCsv(filename string) ([][]string, error) {
 }
 
 func handlerGetPokemonID(w http.ResponseWriter, r *http.Request) {
+
 	res, _ := ReadCsv("data.csv")
 	UnmarshalData(res)
-	log.Println(pokemons)
-	log.Println("The URL that you are calling is: " + r.URL.Path)
 	ids := strings.TrimPrefix(r.URL.Path, "/pokemon/")
 
+	if len(ids) == 0 {
+		fmt.Println("id is missing in parameters")
+		w.Write([]byte("id is missing in parameters"))
+	}
+
 	id, _ := strconv.ParseInt(ids, 0, 0)
-	log.Printf("id %T", id)
 	val, ok := pokemons[id]
 	if !ok {
 		log.Println("id is invalid")
 		w.Write([]byte("id is invalid"))
 	}
-	w.Write([]byte(val))
+
+	w.Write([]byte(val + "\n"))
 }
 
 func main() {
@@ -64,7 +69,7 @@ func main() {
 	m.HandleFunc("/pokemon/", handlerGetPokemonID)
 
 	s := &http.Server{
-		Addr:    ":8000",
+		Addr:    ":8080",
 		Handler: m,
 	}
 
