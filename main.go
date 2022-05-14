@@ -2,10 +2,11 @@ package main
 
 import (
 	"encoding/csv"
-	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var pokemons = map[int64]string{}
@@ -40,11 +41,33 @@ func ReadCsv(filename string) ([][]string, error) {
 	return rows, nil
 }
 
+func handlerGetPokemonID(w http.ResponseWriter, r *http.Request) {
+	res, _ := ReadCsv("data.csv")
+	UnmarshalData(res)
+	log.Println(pokemons)
+	log.Println("The URL that you are calling is: " + r.URL.Path)
+	ids := strings.TrimPrefix(r.URL.Path, "/pokemon/")
+
+	id, _ := strconv.ParseInt(ids, 0, 0)
+	log.Printf("id %T", id)
+	val, ok := pokemons[id]
+	if !ok {
+		log.Println("id is invalid")
+		w.Write([]byte("id is invalid"))
+	}
+	w.Write([]byte(val))
+}
+
 func main() {
 
-	res, _ := ReadCsv("data.csv")
-	fmt.Println(res)
-	UnmarshalData(res)
-	fmt.Println(pokemons)
+	m := http.NewServeMux()
+	m.HandleFunc("/pokemon/", handlerGetPokemonID)
+
+	s := &http.Server{
+		Addr:    ":8000",
+		Handler: m,
+	}
+
+	log.Fatal(s.ListenAndServe())
 
 }
