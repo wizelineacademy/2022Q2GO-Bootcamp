@@ -46,9 +46,14 @@ func readFile(fileName string) []data {
 }
 
 func viewHandler(writer http.ResponseWriter, request *http.Request) {
-	lines := fmt.Sprint(readFile("csvfile.csv"))
-	message := []byte(lines)
-	_, err := writer.Write(message)
+	rows := readFile("csvfile.csv")
+	message := "<h1>File content: </h1>"
+	message += "<ul>"
+	for _, data := range rows {
+		message += fmt.Sprint("<li>Index: ", data.Index, " Item: ", data.Item, "</li>")
+	}
+	message += "</ul>"
+	_, err := writer.Write([]byte(message))
 	if err != nil {
 		log.Fatal()
 	}
