@@ -10,9 +10,9 @@ import (
 	"os"
 )
 
-func readCsv(pokemonId string) ([]string, error) {
-	fileName := "pokemon.csv"
+const fileName = "pokemon.csv"
 
+func readCsv(pokemonId string) ([]string, error) {
 	fs, err := os.Open(fileName)
 
 	if err != nil {
