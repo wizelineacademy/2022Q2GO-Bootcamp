@@ -41,6 +41,8 @@ readLoop:
 }
 
 func handler(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("Content-Type", "application/json")
+
 	keys, ok := request.URL.Query()["id"]
 
 	if !ok || len(keys[0]) < 1 {
