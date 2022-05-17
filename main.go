@@ -45,7 +45,7 @@ func handler(response http.ResponseWriter, request *http.Request) {
 
 	if !ok || len(keys[0]) < 1 {
 		errParameterId := fmt.Errorf("Url Param 'id' is missing")
-		http.Error(response, errParameterId.Error(), http.StatusInternalServerError)
+		http.Error(response, errParameterId.Error(), http.StatusBadRequest)
 		log.Print(errParameterId)
 		return
 	}
