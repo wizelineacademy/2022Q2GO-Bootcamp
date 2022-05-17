@@ -16,36 +16,37 @@ func readCsv(pokemonId string) ([]string, error) {
 	fs, err := os.Open(fileName)
 
 	if err != nil {
-		return nil, fmt.Errorf("can not open the file, err is %+v", err)
+		return nil, fmt.Errorf("Can not open the file, err is %+v", err)
 	}
 
 	defer fs.Close()
 
 	reader := csv.NewReader(fs)
 
+readLoop:
 	for {
 		content, err := reader.Read()
 
-		if err != nil && err != io.EOF {
-			return nil, fmt.Errorf("can not read, err is %+v", err)
-		}
-		if err == io.EOF {
-			break
-		}
-
-		if content[0] == pokemonId {
+		switch {
+		case err != nil && err != io.EOF:
+			return nil, fmt.Errorf("Can not read, err is %+v", err)
+		case err == io.EOF:
+			break readLoop
+		case content[0] == pokemonId:
 			return content, nil
 		}
 	}
 
-	return nil, fmt.Errorf("Not found, err is %+v", err)
+	return nil, fmt.Errorf("Pokemon not found")
 }
 
 func handler(response http.ResponseWriter, request *http.Request) {
 	keys, ok := request.URL.Query()["id"]
 
 	if !ok || len(keys[0]) < 1 {
-		log.Fatal("Url Param 'id' is missing")
+		errParameterId := fmt.Errorf("Url Param 'id' is missing")
+		http.Error(response, errParameterId.Error(), http.StatusInternalServerError)
+		log.Print(errParameterId)
 		return
 	}
 
@@ -54,7 +55,9 @@ func handler(response http.ResponseWriter, request *http.Request) {
 	content, errCsv := readCsv(key)
 
 	if errCsv != nil {
-		log.Fatal(fmt.Errorf("can not read the csv file: %v", errCsv))
+		http.Error(response, errCsv.Error(), http.StatusNotFound)
+		log.Print(errCsv)
+		return
 	}
 
 	jsonEncoder := json.NewEncoder(response)
@@ -63,7 +66,7 @@ func handler(response http.ResponseWriter, request *http.Request) {
 	err := jsonEncoder.Encode(content)
 
 	if err != nil {
-		err = fmt.Errorf("impossible to encode pokemons: %v", err)
+		err = fmt.Errorf("Impossible to encode pokemons: %v", err)
 		http.Error(response, err.Error(), http.StatusInternalServerError)
 		log.Print(err)
 	}
