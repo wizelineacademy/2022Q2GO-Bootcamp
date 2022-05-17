@@ -63,7 +63,9 @@ func handler(response http.ResponseWriter, request *http.Request) {
 	err := jsonEncoder.Encode(content)
 
 	if err != nil {
-		log.Fatal(fmt.Errorf("impossible to encode pokemons: %v", err))
+		err = fmt.Errorf("impossible to encode pokemons: %v", err)
+		http.Error(response, err.Error(), http.StatusInternalServerError)
+		log.Print(err)
 	}
 }
 
