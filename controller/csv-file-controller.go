@@ -3,7 +3,6 @@ package controller
 import (
 	"encoding/csv"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/SamuelSalas/2022Q2GO-Bootcamp/errors"
@@ -48,7 +47,6 @@ func (*controller) PostCSVFile(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	result, err := csvService.ConvertCsvToJson(data)
-	fmt.Println(err.Error())
 	if err != nil {
 		resp.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(resp).Encode(errors.ErrorMessage{Message: err.Error()})

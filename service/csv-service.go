@@ -32,8 +32,8 @@ func (*service) ConvertCsvToJson(data [][]string) ([]*entity.CSV, error) {
 			ID:    line[0],
 			Items: line[1],
 		}
-		csvData = append(csvData, rec)
 
+		csvData = append(csvData, rec)
 	}
 	return csvData, nil
 }
