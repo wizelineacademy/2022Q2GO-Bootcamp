@@ -1,0 +1,14 @@
+version: "3"
+services:
+  go-api:
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+    environment:
+      API_PORT: "8080"
+      GO111MODULE: "on"
+      ENVIRONMENT: "DEV"
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./:/app
