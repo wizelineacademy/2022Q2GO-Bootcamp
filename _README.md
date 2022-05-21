@@ -30,5 +30,7 @@ The CSV should have any information, for example:
 Resources to improve the API.
 
 https://github.com/golang-standards/project-layout
+
 https://www.youtube.com/watch?v=oL6JBUk6tj0
+
 https://refactoring.guru/design-patterns/catalog

@@ -1,31 +1,35 @@
-package database
+package repository
 
 import (
-	"context"
 	"encoding/csv"
 	"errors"
 	"log"
 	"os"
 	"strconv"
-
-	"github.com/TanZng/toh-api/models"
+	"toh-api/internal/entity"
 )
 
-type CVSRepository struct {
+// CharacterRepository the contract of movie repository
+type CharacterRepository interface {
+	InsertCharacter(character *entity.Character) error
+	GetCharacterById(id int64) (*entity.Character, error)
+}
+
+// characterRepository the character repository implementation struct
+type characterRepository struct {
 	file string
 }
 
-func NewCSVRepository(file string) (*CVSRepository, error) {
-
-	return &CVSRepository{file}, nil
+func NewCharacterRepository(file string) CharacterRepository {
+	return &characterRepository{file}
 }
 
-func (repo *CVSRepository) InsertCharacter(ctx context.Context, user *models.Character) error {
+func (repo *characterRepository) InsertCharacter(character *entity.Character) error {
 
 	return nil
 }
 
-func (repo *CVSRepository) GetCharacterById(ctx context.Context, id int64) (*models.Character, error) {
+func (repo *characterRepository) GetCharacterById(id int64) (*entity.Character, error) {
 	f, err := os.Open(repo.file)
 	if err != nil {
 		log.Fatal("Unable to read input file "+repo.file, err)
@@ -41,7 +45,7 @@ func (repo *CVSRepository) GetCharacterById(ctx context.Context, id int64) (*mod
 	// log.Println("Records:", records)
 
 	var find bool
-	var character models.Character
+	var character entity.Character
 
 	for _, record := range records {
 		readId, _ := strconv.ParseInt(record[0], 10, 64)
@@ -60,8 +64,8 @@ func (repo *CVSRepository) GetCharacterById(ctx context.Context, id int64) (*mod
 	return &character, nil
 }
 
-// func (repo *CVSRepository) GetAllCharacter(ctx context.Context, id int64) ([]models.Character, error) {
-// 	var employeeRecords []models.Character
+// func (repo *characterRepository) GetAllCharacter(ctx context.Context, id int64) ([]entity.Character, error) {
+// 	var employeeRecords []entity.Character
 // 	records, err := csv.NewReader(repo.file).ReadAll()
 // 	if err != nil {
 // 		return employeeRecords, err
@@ -69,7 +73,7 @@ func (repo *CVSRepository) GetCharacterById(ctx context.Context, id int64) (*mod
 // 	for _, record := range records {
 // 		idInt, _ := strconv.ParseInt(record[0], 10, 64)
 // 		ageInt, _ := strconv.ParseUint(record[2], 10, 32)
-// 		data := models.Character{
+// 		data := entity.Character{
 // 			ID:   idInt,
 // 			Name: record[1],
 // 			Age:  ageInt,
@@ -79,8 +83,3 @@ func (repo *CVSRepository) GetCharacterById(ctx context.Context, id int64) (*mod
 
 // 	return employeeRecords, nil
 // }
-
-func (repo *CVSRepository) Close() error {
-	log.Println("Close CSV")
-	return nil
-}
