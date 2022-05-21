@@ -1,3 +1,17 @@
+// Package routes The Owl House API
+//
+// Documentation for the Owl House API
+//
+// Schemes: http
+// BasePath: /
+// Version: 0.0.1
+//
+// Consumes:
+// - application/json
+//
+// Produces:
+// - application/json
+// swagger:meta
 package routes
 
 import (

@@ -15,6 +15,12 @@ func CharacterRoutes() characterRoutes {
 	return characterRoutes{}
 }
 
+// swagger:route GET /character/:id characterById
+// Returns a character based on the given id
+// responses:
+// 	201: character
+
+// getCharacter returns the character from the data store
 func (u characterRoutes) getCharacter(ctx *fiber.Ctx) error {
 	id := ctx.Params("id", "")
 

@@ -1,7 +1,14 @@
 package entity
 
+// A Character from TOH.
+// swagger:response character
 type Character struct {
-	ID   int64  `json:"id"`
+	// Example: 1
+	ID int64 `json:"id"`
+	// Required: true
+	// Example: Luz
 	Name string `json:"name"`
-	Age  int64  `json:"age"`
+	// Required: true
+	// Example: 14
+	Age int64 `json:"age"`
 }

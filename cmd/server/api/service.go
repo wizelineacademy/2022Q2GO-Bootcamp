@@ -37,3 +37,7 @@ func (s ApiService) PutPublic(route string, handler func(*fiber.Ctx) error) {
 func (s ApiService) DeletePublic(route string, handler func(*fiber.Ctx) error) {
 	s.api.Delete(route, func(c *fiber.Ctx) error { return handler(c) })
 }
+
+func (s ApiService) GetPublicStatic(prefix, root string) {
+	s.api.Static(prefix, root)
+}

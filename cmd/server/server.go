@@ -14,5 +14,6 @@ func Init() {
 
 	routes.New(&newApi, routes.CharacterRoutes()).Register()
 	routes.New(&newApi, routes.HomeRoutes()).Register()
+	routes.New(&newApi, routes.SwaggerRoutes()).Register()
 	newApi.Listen(os.Getenv("API_PORT"))
 }
