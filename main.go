@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	controller "./controller" 
+
+	"github.com/gorilla/mux"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/api/controller"
 )
 
-
-func main(){
+func main() {
 	fmt.Println("Server is lift")
 	fmt.Println("Port: 8000")
 	router := mux.NewRouter()
@@ -21,5 +21,5 @@ func main(){
 
 func buildCSVRoutes(router *mux.Router) {
 	prefix := "/pokemon"
-	router.HandleFunc(prefix + "/{id}", controller.GetItems).Methods("GET")
+	router.HandleFunc(prefix+"/{id}", controller.GetItems).Methods("GET")
 }
