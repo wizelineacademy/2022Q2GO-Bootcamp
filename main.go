@@ -2,24 +2,36 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
+	"os"
 
-	"github.com/gorilla/mux"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/api/controller"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/api/hooks"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/api/hooks/errorhandler"
+	"github.com/labstack/echo"
 )
 
 func main() {
 	fmt.Println("Server is lift")
 	fmt.Println("Port: 8000")
-	router := mux.NewRouter()
 
-	buildCSVRoutes(router)
+	app := echo.New()
 
-	log.Fatal(http.ListenAndServe(":8000", router))
-}
+	//set custom binder to validate payloads
+	bi := hooks.NewCustomBinderWithValidation()
+	app.Binder = bi
 
-func buildCSVRoutes(router *mux.Router) {
-	prefix := "/pokemon"
-	router.HandleFunc(prefix+"/{id}", controller.GetItems).Methods("GET")
+	//set custom error handler
+	app.HTTPErrorHandler = errorhandler.NewErrorHandler
+
+	//set the port listener
+	port := "8000"
+	if os.Getenv("PORT") != "" {
+		port = os.Getenv("PORT")
+	}
+
+	app.GET("/pokemon", controller.CreateArticle)
+
+	fmt.Printf("API Management Listen to %s port in\n", port)
+
+	app.Logger.Fatal(app.Start(":8000"))
 }

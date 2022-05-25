@@ -3,8 +3,6 @@ github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d/go.mod h1:W
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
-github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/krmirandas/2022Q2GO-Bootcamp v0.0.0-20220514040744-c2b0f8d79fc8 h1:eXCQK+wa8S0jQlw9m/gq8wx7HxStZnYuEdd5HyPxYW8=
 github.com/krmirandas/2022Q2GO-Bootcamp v0.0.0-20220514040744-c2b0f8d79fc8/go.mod h1:C2hcN93Hv4ekuSZztgQ1kT0fICMJFdcR2CsEdIUAgQc=
 github.com/labstack/echo v3.3.10+incompatible h1:pGRcYk231ExFAyoAjAfD85kQzRJCRI8bbnE7CX5OEgg=

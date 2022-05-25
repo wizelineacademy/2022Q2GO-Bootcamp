@@ -3,6 +3,8 @@ package errorhandler
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/labstack/echo"
 )
 
 var (
@@ -32,17 +34,17 @@ func (e *Error) Error() string {
 	return fmt.Sprintf("Error Code is %d - %s - %s", e.Code, e.Message, e.Description)
 }
 
-// func NewErrorHandler(err error, c echo.Context) {
-// 	speError := New(http.StatusInternalServerError,
-// 		http.StatusInternalServerError,
-// 		http.StatusText(http.StatusInternalServerError),
-// 		http.StatusText(http.StatusInternalServerError),
-// 	)
-// 	if he, ok := err.(*Error); ok {
-// 		speError = he
-// 	}
+func NewErrorHandler(err error, c echo.Context) {
+	speError := New(http.StatusInternalServerError,
+		http.StatusInternalServerError,
+		http.StatusText(http.StatusInternalServerError),
+		http.StatusText(http.StatusInternalServerError),
+	)
+	if he, ok := err.(*Error); ok {
+		speError = he
+	}
 
-// 	if !c.Response().Committed() {
-// 		c.JSON(speError.HttpCode, speError)
-// 	}
-// }
+	if !c.Response().Committed {
+		c.JSON(speError.HttpCode, speError)
+	}
+}
