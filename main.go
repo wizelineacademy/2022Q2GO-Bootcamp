@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/krmirandas/2022Q2GO-Bootcamp/api/controller"
-	"github.com/krmirandas/2022Q2GO-Bootcamp/api/hooks"
-	"github.com/krmirandas/2022Q2GO-Bootcamp/api/hooks/errorhandler"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook/errorhandler"
 	"github.com/labstack/echo"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	app := echo.New()
 
 	//set custom binder to validate payloads
-	bi := hooks.NewCustomBinderWithValidation()
+	bi := hook.NewCustomBinderWithValidation()
 	app.Binder = bi
 
 	//set custom error handler
@@ -29,7 +29,8 @@ func main() {
 		port = os.Getenv("PORT")
 	}
 
-	app.GET("/pokemon", controller.CreateArticle)
+	app.GET("/pokemon", controller.GetItems)
+	app.GET("/pokemon/:id", controller.GetPokemonById)
 
 	fmt.Printf("API Management Listen to %s port in\n", port)
 
