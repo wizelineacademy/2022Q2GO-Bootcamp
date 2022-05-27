@@ -9,6 +9,10 @@ type Reader interface {
 	ReadCsvFile() (*os.File, error)
 }
 
+type Writer interface {
+	ReadCsvFile() (*os.File, error)
+}
+
 type Csv interface {
 	Reader
 }

@@ -43,8 +43,15 @@ func (r *rs) ReadCsv() ([]models.Character, error) {
 		id, _ := strconv.Atoi(line[0])
 
 		character := models.Character{
-			Id:   id,
-			Name: line[1],
+			Id:      id,
+			Name:    line[1],
+			Status:  line[2],
+			Species: line[3],
+			Type:    line[4],
+			Gender:  line[5],
+			Image:   line[6],
+			Url:     line[7],
+			Created: line[8],
 		}
 		characters = append(characters, character)
 

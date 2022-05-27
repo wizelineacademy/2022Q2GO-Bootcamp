@@ -41,6 +41,7 @@ func main() {
 	//Routes
 	router.GET("/", hc.Home)
 	router.GET("/characters", cc.ListCharacter)
+	router.GET("/charactersApi", cc.ListCharacterApi)
 	router.GET("/readCsv", cc.ReadCsv)
 	router.SERVE(c.Port)
 }

@@ -25,7 +25,7 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 
 func (repo *PostgresRepository) ListCharacter(ctx context.Context, page uint64) ([]*models.Character, error) {
 	//Only allow edit for owners
-	rows, err := repo.db.QueryContext(ctx, "SELECT id, name FROM characters LIMIT $1 OFFSET $2", 2, page*2)
+	rows, err := repo.db.QueryContext(ctx, "SELECT * FROM characters LIMIT $1 OFFSET $2", 2, page*2)
 	if err != nil {
 		return nil, err
 	}
