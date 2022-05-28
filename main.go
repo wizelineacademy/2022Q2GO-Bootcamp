@@ -31,6 +31,7 @@ func main() {
 
 	app.GET("/pokemon", controller.GetItems)
 	app.GET("/pokemon/:id", controller.GetPokemonById)
+	app.GET("/exchange", controller.CreateCsv)
 
 	fmt.Printf("API Management Listen to %s port in\n", port)
 

@@ -28,7 +28,6 @@ func (customBinderWithValidation) Bind(i interface{}, c echo.Context) error {
 		return echo.ErrUnsupportedMediaType
 	}
 	if err := json.NewDecoder(rq.Body).Decode(i); err != nil {
-		// fmt.Println(err)
 		return errorhandler.ErrSomeFieldAreNotValid
 	}
 	//data decoded now should check validation if it's struct
@@ -38,7 +37,6 @@ func (customBinderWithValidation) Bind(i interface{}, c echo.Context) error {
 	}
 	if val.Kind() == reflect.Struct {
 		if isValid, err2 := govalidator.ValidateStruct(i); !isValid || err2 != nil {
-			// fmt.Println(err2)
 			return errorhandler.ErrSomeFieldAreNotValid
 		}
 	}
