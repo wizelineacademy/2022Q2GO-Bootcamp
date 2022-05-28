@@ -18,7 +18,7 @@ type Config struct {
 // Init function for the constructor struct
 func NewConfig() (*Config, error) {
 	c := &Config{}
-	err := godotenv.Load(".env")
+	err := godotenv.Load("config/.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 

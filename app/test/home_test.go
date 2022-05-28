@@ -5,7 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	controller "github.com/luischitala/2022Q2GO-Bootcamp/controller"
+	controller "github.com/luischitala/2022Q2GO-Bootcamp/internal/controller"
 )
 
 var homeController controller.HomeController = controller.NewHomeController()

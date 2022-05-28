@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	controller "github.com/luischitala/2022Q2GO-Bootcamp/controller"
-	repository "github.com/luischitala/2022Q2GO-Bootcamp/repository"
-	usecase "github.com/luischitala/2022Q2GO-Bootcamp/usecase"
+	controller "github.com/luischitala/2022Q2GO-Bootcamp/internal/controller"
+	repository "github.com/luischitala/2022Q2GO-Bootcamp/internal/repository"
+	usecase "github.com/luischitala/2022Q2GO-Bootcamp/internal/usecase"
 )
 
 var rcsv = repository.NewCsvRepository()

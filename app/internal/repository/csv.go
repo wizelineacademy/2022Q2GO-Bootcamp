@@ -1,7 +1,9 @@
 package repository
 
 import (
+	"encoding/csv"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -10,11 +12,12 @@ type Reader interface {
 }
 
 type Writer interface {
-	ReadCsvFile() (*os.File, error)
+	WriteCsvFile() (*csv.Writer, *os.File, error)
 }
 
 type Csv interface {
 	Reader
+	Writer
 }
 
 //Chain struct to separate logic between the next layer
@@ -32,4 +35,18 @@ func (c *csvr) ReadCsvFile() (*os.File, error) {
 	}
 
 	return csvFile, err
+}
+
+func (c *csvr) WriteCsvFile() (*csv.Writer, *os.File, error) {
+	//Create Csv
+	csvFile, err := os.Create("files/characterResult.csv")
+
+	if err != nil {
+		log.Fatalf("failed creating file: %s", err)
+	}
+
+	// Write into the csv
+	csvwriter := csv.NewWriter(csvFile)
+
+	return csvwriter, csvFile, err
 }

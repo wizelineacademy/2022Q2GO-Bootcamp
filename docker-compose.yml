@@ -3,7 +3,7 @@ version: '3.4'
 services:
   db:
     container_name: db
-    build: app/database
+    build: app/internal/infrastructure/database
     ports:
       - 54321:5432
     volumes:
@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     env_file:
-      - app/.env
+      - app/config/.env
     networks:
       - go-bootcamp
     ports:

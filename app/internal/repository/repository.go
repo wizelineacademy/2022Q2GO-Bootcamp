@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/luischitala/2022Q2GO-Bootcamp/models"
+	models "github.com/luischitala/2022Q2GO-Bootcamp/internal/entity"
 )
 
 type Repository interface {

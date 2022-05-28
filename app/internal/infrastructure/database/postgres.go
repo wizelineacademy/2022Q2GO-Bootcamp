@@ -6,7 +6,7 @@ import (
 	"log"
 
 	_ "github.com/lib/pq"
-	models "github.com/luischitala/2022Q2GO-Bootcamp/models"
+	models "github.com/luischitala/2022Q2GO-Bootcamp/internal/entity"
 )
 
 type PostgresRepository struct {

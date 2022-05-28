@@ -21,6 +21,14 @@ func NewHomeController() HomeController {
 	return &controller{}
 }
 
+// Home godoc
+// @Summary Hello World
+// @Description Hello World
+// @Tags General
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} HomeResponse
+// @Router / [get]
 func (*controller) Home(w http.ResponseWriter, r *http.Request) {
 	//W will send the response
 	w.Header().Add("Content-Type", "application/json")

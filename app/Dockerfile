@@ -27,7 +27,7 @@ FROM scratch as runner
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-COPY .env ./
+COPY ./config/.env ./config/
 
 COPY /files/characters.csv ./files/characters.csv
 
