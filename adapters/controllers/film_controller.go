@@ -4,8 +4,18 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"wizeline/ghibli/adapters/repository"
+	"wizeline/ghibli/entities"
+	"wizeline/ghibli/services/repository"
 )
+
+type FilmController struct {
+	repo repository.Repository[entities.Film]
+}
+
+func NewFilmController(
+	repo repository.Repository[entities.Film]) FilmController {
+	return FilmController{repo: repo}
+}
 
 func sendEncoded(w http.ResponseWriter, data []byte) {
 	w.Header().Set("Content-Type", "application/json")
@@ -13,8 +23,8 @@ func sendEncoded(w http.ResponseWriter, data []byte) {
 	w.Write(data)
 }
 
-func getEncodedFilms() ([]byte, error) {
-	films, err := repository.ListAllFilms()
+func (f FilmController) getEncodedFilms() ([]byte, error) {
+	films, err := f.repo.ListAll()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -22,13 +32,13 @@ func getEncodedFilms() ([]byte, error) {
 	return json.MarshalIndent(films, "", "\t")
 }
 
-func getEncodedFilm(id string) ([]byte, error) {
+func (f FilmController) getEncodedFilm(id string) ([]byte, error) {
 	idn, err := strconv.Atoi(id)
 	if err != nil {
 		return []byte{}, err
 	}
 
-	film, err := repository.GetFilmById(idn)
+	film, err := repository.GetById(f.repo, idn)
 	if err != nil {
 		return []byte{}, err
 	}
@@ -36,19 +46,19 @@ func getEncodedFilm(id string) ([]byte, error) {
 	return json.MarshalIndent(film, "", "\t")
 }
 
-func tryGetEncoded(r *http.Request) ([]byte, error) {
+func (f FilmController) tryGetEncoded(r *http.Request) ([]byte, error) {
 	id := r.URL.Query().Get("id")
 
 	switch {
 	case id != "":
-		return getEncodedFilm(id)
+		return f.getEncodedFilm(id)
 	default:
-		return getEncodedFilms()
+		return f.getEncodedFilms()
 	}
 }
 
-func ServeFilms(w http.ResponseWriter, r *http.Request) {
-	data, err := tryGetEncoded(r)
+func (f FilmController) ServeFilms(w http.ResponseWriter, r *http.Request) {
+	data, err := f.tryGetEncoded(r)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
