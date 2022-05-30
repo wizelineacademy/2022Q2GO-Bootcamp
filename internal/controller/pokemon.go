@@ -34,6 +34,5 @@ func GetPokemonById(c echo.Context) error {
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 	//send the pokemon
-	c.JSON(http.StatusOK, pokemon)
-	return nil
+	return c.JSON(http.StatusOK, pokemon)
 }

@@ -31,6 +31,5 @@ func CreateCsv(c echo.Context) error {
 		return errorhandler.ErrInternalServerError
 	}
 
-	c.JSON(http.StatusOK, t)
-	return nil
+	return c.JSON(http.StatusOK, t)
 }
