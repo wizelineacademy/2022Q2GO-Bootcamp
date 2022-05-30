@@ -12,9 +12,7 @@ import (
 
 func GetItems(c echo.Context) error {
 	log.Println("Get infos about pokemons")
-	//get pokemon from request
 	pokemon := services.RetrievePokemon()
-	//return the new pokemon
 	c.JSON(http.StatusCreated, pokemon)
 	return nil
 }
@@ -38,8 +36,4 @@ func GetPokemonById(c echo.Context) error {
 	//send the pokemon
 	c.JSON(http.StatusOK, pokemon)
 	return nil
-}
-
-func initHeaders(writer http.ResponseWriter) {
-	writer.Header().Set("Content-Type", "application/json")
 }

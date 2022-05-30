@@ -5,19 +5,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/model"
 )
 
-const baseURL string = "https://api.coingecko.com/api/v3"
+const baseURL string = "https://api.zippopotam.us"
 
 type Client struct {
 	Username string
 	Password string
-}
-
-type Todo struct {
-	ID      int    `json:"id"`
-	Content string `json:"content"`
-	Done    bool   `json:"done"`
 }
 
 func NewBasicAuthClient(username, password string) *Client {
@@ -49,8 +45,8 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
-func (s *Client) GetTodo() (map[string]interface{}, error) {
-	url := fmt.Sprintf(baseURL + "/exchange_rates")
+func (s *Client) GetTodo(id string) (*model.ZipCodeInfo, error) {
+	url := fmt.Sprintf(baseURL+"/mx/%s", id)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -61,10 +57,11 @@ func (s *Client) GetTodo() (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	var result map[string]interface{}
-	err = json.Unmarshal([]byte(bytes), &result)
+	var data model.ZipCodeInfo
+	err = json.Unmarshal(bytes, &data)
 	if err != nil {
 		return nil, err
 	}
-	return result, nil
+
+	return &data, nil
 }

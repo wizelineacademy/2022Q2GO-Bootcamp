@@ -17,6 +17,7 @@ var (
 	ErrNotFoundAnyItemWithThisId   = New(http.StatusNotFound, http.StatusNotFound, "NOT_FOUND_ANY_ITEM_WITH_THIS_ID", "not found any item with this id")
 	ErrInternalServerError         = New(http.StatusInternalServerError, http.StatusInternalServerError, "INTERNAL_SERVER_ERROR", "internal server error")
 	ErrCanNotAccessToTheseResource = New(http.StatusForbidden, http.StatusForbidden, "CAN_NOT_ACCESS_TO_THESE_RESOURCES", "you can't access to these resources")
+	ErrFailedDependency            = New(http.StatusFailedDependency, http.StatusFailedDependency, "HTTP_FAILED_DEPENDENCY", "Client failed due to a dependency on another request that also failed")
 )
 
 type Error struct {
