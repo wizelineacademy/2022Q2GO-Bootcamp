@@ -18,8 +18,8 @@ func CreateCsv(c echo.Context) error {
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
-	client := services.NewBasicAuthClient("", "")
-	t, err := client.GetTodo(c.Param("id"))
+	client := services.NewClient("", "", "mx")
+	t, err := client.GetRequest(c.Param("id"))
 	if err != nil {
 		log.Println("Error")
 		return errorhandler.ErrFailedDependency

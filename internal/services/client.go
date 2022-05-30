@@ -12,14 +12,16 @@ import (
 const baseURL string = "https://api.zippopotam.us"
 
 type Client struct {
+	URL      string
 	Username string
 	Password string
 }
 
-func NewBasicAuthClient(username, password string) *Client {
+func NewClient(username, password, url string) *Client {
 	return &Client{
 		Username: username,
 		Password: password,
+		URL:      url,
 	}
 }
 
@@ -45,8 +47,8 @@ func (s *Client) doRequest(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
-func (s *Client) GetTodo(id string) (*model.ZipCodeInfo, error) {
-	url := fmt.Sprintf(baseURL+"/mx/%s", id)
+func (s *Client) GetRequest(id string) (*model.ZipCodeInfo, error) {
+	url := fmt.Sprintf(baseURL+"/%s/%s", s.URL, id)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err

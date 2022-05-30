@@ -64,9 +64,6 @@ func TestCreateCsv(t *testing.T) {
 			if !tt.wantErr {
 				if assert.NoError(t, controller.CreateCsv(c)) {
 					assert.Equal(t, http.StatusOK, rec.Code)
-					// s7 := strings.TrimSpace(fmt.Sprintf(rec.Body.String()))
-					// fmt.Println(s7)
-					// fmt.Println(",,,,,,,-_________-,,,,,,,,,,")
 
 					s := strings.TrimSpace(fmt.Sprintf(tt.want))
 					s1 := strings.TrimSpace(fmt.Sprintf(rec.Body.String()))

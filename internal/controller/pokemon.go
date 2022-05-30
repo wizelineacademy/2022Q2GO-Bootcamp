@@ -24,7 +24,6 @@ func GetPokemonById(c echo.Context) error {
 	if err != nil {
 		log.Println("Error")
 
-		//Retrieves the infos about
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
