@@ -1,8 +1,6 @@
 #
 # Makefile to perform "live code reloading" after changes to .go files.
 #
-# n.b. you must install fswatch (OS X: `brew install fswatch`)
-#
 # To start live reloading run the following command:
 # $ make serve
 #
