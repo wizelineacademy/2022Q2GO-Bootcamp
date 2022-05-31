@@ -1,5 +1,7 @@
 package main
 
+// Most of the code take form https://github.com/pkritiotis/go-climb-clean-architecture-example as reference
+
 import (
 	"github.com/jesusrevilla/capstone/internal/app"
 	"github.com/jesusrevilla/capstone/internal/inputport"
