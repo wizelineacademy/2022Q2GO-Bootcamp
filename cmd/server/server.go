@@ -3,17 +3,20 @@ package server
 import (
 	"github.com/gofiber/fiber/v2"
 	"os"
-	"toh-api/cmd/server/api"
-	routes "toh-api/cmd/server/api/router"
+	routes2 "toh-api/internal/router"
+	"toh-api/pkg/parser"
 )
 
 func Init() {
 	app := fiber.New()
 
-	newApi := api.New(app)
+	newApi := parser.New(app)
 
-	routes.New(&newApi, routes.CharacterRoutes()).Register()
-	routes.New(&newApi, routes.HomeRoutes()).Register()
-	routes.New(&newApi, routes.SwaggerRoutes()).Register()
-	newApi.Listen(os.Getenv("API_PORT"))
+	routes2.New(&newApi, routes2.CharacterRoutes()).Register()
+	routes2.New(&newApi, routes2.HomeRoutes()).Register()
+	routes2.New(&newApi, routes2.SwaggerRoutes()).Register()
+	err := newApi.Listen(os.Getenv("API_PORT"))
+	if err != nil {
+		return
+	}
 }

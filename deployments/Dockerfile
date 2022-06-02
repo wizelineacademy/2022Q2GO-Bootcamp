@@ -2,7 +2,7 @@ FROM golang:1.18
 
 WORKDIR /app
 
-COPY ./ /app
+COPY .. /app
 
 RUN apt-get install git
 

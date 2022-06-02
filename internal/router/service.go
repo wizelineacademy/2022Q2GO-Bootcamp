@@ -15,19 +15,19 @@
 package routes
 
 import (
-	"toh-api/cmd/server/api"
+	"toh-api/pkg/parser"
 )
 
 type routeAbstract interface {
-	RegisterRoutes(*api.ApiService)
+	RegisterRoutes(*parser.ApiService)
 }
 
 type routeService struct {
-	api   *api.ApiService
+	api   *parser.ApiService
 	route routeAbstract
 }
 
-func New(api *api.ApiService, routes routeAbstract) routeService {
+func New(api *parser.ApiService, routes routeAbstract) routeService {
 	return routeService{
 		api:   api,
 		route: routes,

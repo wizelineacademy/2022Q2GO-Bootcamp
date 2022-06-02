@@ -1,8 +1,6 @@
-package api
+package parser
 
-import (
-	"github.com/gofiber/fiber/v2"
-)
+import "github.com/gofiber/fiber/v2"
 
 type AuthService interface {
 	AuthorizeToken(token string) error

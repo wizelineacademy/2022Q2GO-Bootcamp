@@ -4,9 +4,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"net/http"
 	"strconv"
-	"toh-api/cmd/server/api"
 	"toh-api/internal/repository"
 	"toh-api/internal/service"
+	"toh-api/pkg/parser"
 )
 
 type characterRoutes struct{}
@@ -40,6 +40,6 @@ func (u characterRoutes) getCharacter(ctx *fiber.Ctx) error {
 	return ctx.Status(http.StatusCreated).JSON(character)
 }
 
-func (u characterRoutes) RegisterRoutes(api *api.ApiService) {
+func (u characterRoutes) RegisterRoutes(api *parser.ApiService) {
 	api.GetPublic("/character/:id", u.getCharacter)
 }
