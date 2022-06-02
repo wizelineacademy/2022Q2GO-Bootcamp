@@ -90,7 +90,7 @@ Based on the self-study material and mentorship covered until this deliverable, 
 
 > Note: what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more or fewer items if necessary. However, if you deliver fewer items at this point, you have to cover the remaining tasks in the next deliverable.
 
-## 3rd Deliverable (due Monday June 6th, 9:00AM)
+## Final Deliverable (due Monday June 6th, 9:00AM)
 
 - Add a new endpoint
 - The endpoint must read items from the CSV concurrently using a worker pool
