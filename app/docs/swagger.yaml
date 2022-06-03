@@ -1,0 +1,77 @@
+basePath: /
+definitions:
+  controller.HomeResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+host: localhost:5050
+info:
+  contact:
+    email: lroman@gmail.com
+    name: API Support
+  description: This is a sample API for the final deliverable
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 2022 Wizeline's Go Bootcamp API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Hello World
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.HomeResponse'
+      summary: Hello World
+      tags:
+      - General
+  /characters:
+    get:
+      consumes:
+      - application/json
+      description: Read Characters from database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Character List DB
+      tags:
+      - Character
+  /charactersApi:
+    get:
+      consumes:
+      - application/json
+      description: Read Characters from the Rick & Morty's API
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Character List API
+      tags:
+      - Character
+  /readCsv:
+    get:
+      consumes:
+      - application/json
+      description: Read Characters from a Csv File
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Character List Csv
+      tags:
+      - Character
+swagger: "2.0"
