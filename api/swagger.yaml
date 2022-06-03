@@ -1,0 +1,37 @@
+basePath: /
+consumes:
+- application/json
+info:
+  description: Documentation for the Owl House API
+  title: The Owl House API
+  version: 0.0.1
+paths:
+  /character/:id:
+    get:
+      description: Returns a character based on the given id
+      operationId: characterById
+      responses:
+        "201":
+          $ref: '#/responses/character'
+produces:
+- application/json
+responses:
+  character:
+    description: A Character from TOH.
+    headers:
+      age:
+        description: 'Required: true'
+        example: 14
+        format: int64
+        type: integer
+      id:
+        example: 1
+        format: int64
+        type: integer
+      name:
+        description: 'Required: true'
+        example: Luz
+        type: string
+schemes:
+- http
+swagger: "2.0"
