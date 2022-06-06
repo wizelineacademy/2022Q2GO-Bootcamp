@@ -1,0 +1,98 @@
+id,name,description,min_players,max_players,time
+1,The Quacks of Quedlinburg,"Pull ingredients from your stock to make your pot bubble, but hopefully not explode!",2,4,45
+2,Robinson Crusoe: Adventures on the Cursed Island,Work together — with friends or with Friday — to survive on a deserted island.,1,4,60–120
+3,Clank!: Legacy – Acquisitions Incorporated,"""Go forth, be bold, and ACQUIRE!"" in this campaign version of ""Clank!""",2,4,90–120
+4,On Mars,"Be a part of the first Martian colony, striving to be the best contributor.",1,4,90–150
+5,Terra Mystica,Play fantastical factions.  Expand your influence by terraforming and joining cults.,2,5,60–150
+6,Tzolk'in: The Mayan Calendar,"Lead your people, build monuments and make offerings to earn the favour of the gods.",2,4,90
+7,Lisboa,Compete to reconstruct the city of Lisboa after the great earthquake of 1755.,1,4,60–120
+8,Great Western Trail,Use strategic outposts and navigate danger as you herd your cattle to Kansas City.,2,4,75–150
+9,Gloomhaven,Vanquish monsters with strategic cardplay. Fulfill your quest to leave your legacy!,1,4,60–120
+10,Star Wars: Imperial Assault,Play as Rebel or Imperial forces to fulfill mission objectives.,1,5,60–120
+11,Concordia,Traders compete to build the greatest empire in the Roman Mediterranean.,2,5,100
+12,Food Chain Magnate,Strategically hire and manage your workforce to outcompete rival fast food chains.,2,5,120–240
+13,Le Havre,"Establish a supply chain by collecting resources, building industries, and shipping.",1,5,30–150
+14,The 7th Continent,Journey through a vibrant but deadly land to uncover the key to lifting your curse.,1,4,5–1000
+15,Tigris & Euphrates,Keep your Mesopotamian civilisation in perfect balance through revolutions and wars.,2,4,90
+16,Ark Nova,Design a modern zoo to run a successful park and to support conservation projects.,1,4,90–150
+17,Tainted Grail: The Fall of Avalon,"Exploration, battle and diplomacy in a dark Arthurian realm.",1,4,60–120
+18,Nemesis,Survive an alien-infested spaceship but beware of other players and their agendas.,1,5,90–180
+19,Gloomhaven: Jaws of the Lion,Vanquish monsters with strategic cardplay in a 25-scenario Gloomhaven campaign.,1,4,30–120
+20,Brass: Birmingham,"Build networks, grow industries, and navigate the world of the Industrial Revolution.",2,4,60–120
+21,Anachrony,Use Exosuits & time travel to ensure your vision for the future after the cataclysm.,1,4,30–120
+22,Everdell,Use resources to build a village of critters and constructions in this woodland game.,1,4,40–80
+23,Pandemic Legacy: Season 1,Mutating diseases are spreading around the world - can your team save humanity?,2,4,60
+24,Keyflower,Compete in a unique auction system to build the most prosperous village.,2,6,90–120
+25,Caylus,Entrepreneurs pay workers & bribe an official to build a Château & gain royal favor.,2,5,60–150
+26,Brass: Lancashire,Test your economic mettle as you build and network in the Industrial Revolution.,2,4,60–120
+27,Root,Decide the fate of the forest as woodland factions fight for contrasting goals.,2,4,60–90
+28,Pandemic Legacy: Season 2,The world is a mystery after a devastating pandemic—where will your team go?,2,4,60
+29,Clank!: A Deck-Building Adventure,Claim your treasures but don't attract the dragon in this deck-building dungeon race.,2,4,30–60
+30,Through the Ages: A New Story of Civilization,Rewrite history as you build up your civilization in this epic card drafting game!,2,4,120
+31,Through the Ages: A Story of Civilization,"Lead your civilization through strategic drafting of leaders, technologies, and more.",2,4,120
+32,Kingdom Death: Monster,Try to survive in a nightmarish world that lies under eternal darkness.,1,4,60–180
+33,Eclipse: Second Dawn for the Galaxy,"Build an interstellar civilization by exploration, research, conquest, and diplomacy.",2,6,60–200
+34,Spirit Island,Island Spirits join forces using elemental powers to defend their home from invaders.,1,4,90–120
+35,Gaia Project,"Expand, research, upgrade, and settle the galaxy with one of 14 alien species.",1,4,60–150
+36,Azul,Artfully embellish the walls of your palace by drafting the most beautiful tiles.,2,4,30–45
+37,Paladins of the West Kingdom,Invaders are coming from everywhere.  Keep the faith and defend your homeland.,1,4,90–120
+38,Mechs vs. Minions,Cooperatively program and pilot your mechs to defeat an army of marauding minions.,2,4,60–120
+39,Viticulture Essential Edition,Create the most prosperous winery in Italy from the Tuscan vineyard you've inherited.,1,6,45–90
+40,Pandemic Legacy: Season 0,Work together during the Cold War to prevent a Soviet bio-threat.,2,4,45–60
+41,The Crew: The Quest for Planet Nine,Go on a planet-discovering space mission in this cooperative trick-taking game.,2,5,20
+42,Battlestar Galactica: The Board Game,How can the human race survive when you don't know who is actually human?,3,6,120–180
+43,Twilight Struggle,Relive the Cold War and rewrite history in an epic clash between the USA and USSR.,2,2,120–180
+44,7 Wonders,Draft cards to develop your ancient civilization and build its Wonder of the World.,2,7,30
+45,Eldritch Horror,An unknown Elder God approaches the world—and you must solve mysteries to stop it.,1,8,120–240
+46,Arkham Horror: The Card Game,Investigate the horrors of Arkham while courting cosmic doom.,1,4,60–120
+47,Clans of Caledonia,"Lead your unique Scottish clan to economic might via production, trade, and export.",1,4,30–120
+48,Caverna: The Cave Farmers,"From a simple cave, expand your dwarven home through mining, agriculture, and more.",1,7,30–210
+49,Orléans,"Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",2,4,90
+50,Dune: Imperium,"Influence, intrigue, and combat in the universe of Dune.",1,4,60–120
+51,Lost Ruins of Arnak,Explore an island to find resources and discover the lost ruins of Arnak.,1,4,30–120
+52,Marvel Champions: The Card Game,Battle Marvel villains with unique teams of iconic heroes in this LCG.,1,4,45–90
+53,Too Many Bones,Toss gobs of unique dice in an epic adventure en route to a final boss showdown.,1,4,60–120
+54,Dominant Species,"With an ice age approaching, which animals will best propagate, migrate, and adapt?",2,6,120–240
+55,Puerto Rico,"Ship goods, construct buildings, and choose roles that benefit you more than others.",3,5,90–150
+56,Power Grid,"Bid, network, and manage resources in a race to supply the most cities with power.",2,6,120
+57,Wingspan,Attract a beautiful and diverse collection of birds to your wildlife reserve.,1,5,40–70
+58,Underwater Cities,"Develop future cities on the seafloor through politics, production, and science.",1,4,80–150
+59,Race for the Galaxy,"Worlds await! Colonize, develop and conquer taking advantage of others' choices.",2,4,30–60
+60,7 Wonders Duel,Science? Military? What will you draft to win this head-to-head version of 7 Wonders?,2,2,30
+61,The Gallerist,"Amass a fortune, and stake your reputation by operating a lucrative art gallery.",1,4,60–150
+62,Lorenzo il Magnifico,Avoid excommunication and lead your family to power during the Italian Renaissance.,2,4,60–120
+63,Raiders of the North Sea,Gather your Viking crew in order to plunder seas and lands for glory!,2,4,60–80
+64,Mage Knight Board Game,"Build your hero’s spells, abilities, and artifacts as you explore & conquer cities.",1,4,60–240
+65,Mombasa,Acquire shares of unique companies and propagate their trading posts to rake in cash.,2,4,75–150
+66,Teotihuacan: City of Gods,Use your worker dice to raise the legendary and breathtaking Pyramid of the Sun.,1,4,90–120
+67,Troyes,"Defend the city and rise to power by influencing the merchants, knights and clergy.",1,4,90
+68,Star Wars: Rebellion,Strike from your hidden base as the Rebels—or find and destroy it as the Empire.,2,4,180–240
+69,Aeon's End,"Mages defend humanity’s last city, harnessing alien powers to destroy monstrosities.",1,4,60
+70,Five Tribes,"Move assassins, elders & builders through Naqala to claim oases & control djinns.",2,4,40–80
+71,Architects of the West Kingdom,Will you be a virtuous or nefarious servant of the king? Build your way to glory.,1,5,60–80
+72,Crokinole,Flick discs and make trick shots in this traditional Canadian dexterity game!,2,4,30
+73,Patchwork,Piece together a quilt and leave no holes to become the button master.,2,2,15–30
+74,A Feast for Odin,"Puzzle together the life of a Viking village as you hunt, farm, craft, and explore.",1,4,30–120
+75,Lords of Waterdeep,Deploy agents and hire adventurers to expand your control over the city of Waterdeep.,2,5,60–120
+76,Android: Netrunner,Megacorporation versus Netrunner in this futuristic cyberpunk game of cat and mouse.,2,2,45
+77,Pax Pamir: Second Edition,"Swing the tides of ""The Great Game"" as countries vie for control of Afghanistan.",1,5,45–120
+78,Eclipse,"Build an interstellar civilization by exploration, research, conquest, and diplomacy.",2,6,60–180
+79,El Grande,"Use your caballeros to control regions of medieval Spain, keeping clear of the King!",2,5,60–120
+80,Twilight Imperium: Third Edition,"Epic empire-building game of interstellar conflict, trade, and struggle for power.",3,6,180–240
+81,Dominion: Intrigue,"Enlist torturers, swindlers, and saboteurs to gain wealth and dominate the kingdom.",2,6,30
+82,The Lord of the Rings: Journeys in Middle-Earth,"Heroes explore Middle-earth, working together to combat evil in an epic campaign.",1,5,60–120
+83,The Crew: Mission Deep Sea,Dive into the deep sea in this co-operative trick-taking game.,2,5,20
+84,Barrage,Nations vie for hydroelectric dominance in a dystopia where water is power.,1,4,60–120
+85,Terraforming Mars,Compete with rival CEOs to make Mars habitable and build your corporate empire.,1,5,120
+86,Mansions of Madness: Second Edition,Unravel mysteries in Arkham with your investigative team in this app-guided game.,1,5,120–180
+87,Twilight Imperium: Fourth Edition,"Build an intergalactic empire through trade, research, conquest and grand politics.",3,6,240–480
+88,Kanban EV,EV-factory workers optimize and innovate to stand out at the big board meeting.,1,4,60–180
+89,Agricola (Revised Edition),"Help your farm to prosper in this updated, streamlined edition of the acclaimed game.",1,4,30–120
+90,War of the Ring: Second Edition,The Fellowship and the Free Peoples clash with Sauron over the fate of Middle-Earth.,2,4,150–180
+91,Blood Rage,Ragnarök has come! Secure your place in Valhalla in epic Viking battles.,2,4,60–90
+92,Grand Austria Hotel,Serve guests and prepare rooms to be the best hotelier in the Viennese modern age.,2,4,60–120
+93,Fields of Arle,"Construct dikes, drain bogs, harvest flax and tend to newborn animals in East Frisia.",1,2,60–120
+94,The Castles of Burgundy,"Plan, trade, and build your Burgundian estate to prosperity and prominence.",2,4,30–90
+95,Rising Sun,"Lead your clan to victory through negotiation, combat, monsters and favors from Kami.",3,5,90–120
+96,Cascadia,Create the most harmonious ecosystem as you puzzle together habitats and wildlife.,1,4,30–45
+97,Maracaibo,Seafarers journey to obtain wealth and fame in the 17th century Caribbean.,1,4,30–120

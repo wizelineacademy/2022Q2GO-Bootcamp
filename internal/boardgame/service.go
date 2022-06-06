@@ -1,10 +1,18 @@
 package boardgame
 
-type Service struct {
-	repo Repository
+type reader interface {
+	FindBoardGame(id int) (*BoardGame, error)
 }
 
-func NewService(repo Repository) *Service {
+type repository interface {
+	reader
+}
+
+type Service struct {
+	repo repository
+}
+
+func NewService(repo repository) *Service {
 	return &Service{
 		repo: repo,
 	}
