@@ -74,4 +74,17 @@ paths:
       summary: Character List Csv
       tags:
       - Character
+  /readCsvConcurrently:
+    get:
+      consumes:
+      - application/json
+      description: Read Characters from a Csv File Concurrently
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Character List Csv
+      tags:
+      - Character
 swagger: "2.0"

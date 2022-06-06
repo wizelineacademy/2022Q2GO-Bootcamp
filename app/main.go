@@ -57,6 +57,7 @@ func main() {
 	router.GET("/characters", cc.ListCharacter)
 	router.GET("/charactersApi", cc.ListCharacterApi)
 	router.GET("/readCsv", cc.ReadCsv)
+	router.GET("/readCsvConcurrently", cc.ReadCsvConcurrently)
 	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 	router.SERVE(c.Port)
 }

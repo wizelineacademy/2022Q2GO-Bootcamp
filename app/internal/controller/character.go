@@ -24,6 +24,7 @@ type CharacterController interface {
 	ListCharacter(response http.ResponseWriter, request *http.Request)
 	ListCharacterApi(response http.ResponseWriter, request *http.Request)
 	ReadCsv(response http.ResponseWriter, request *http.Request)
+	ReadCsvConcurrently(response http.ResponseWriter, request *http.Request)
 }
 
 func NewCharacterController(cu usecase.Character) CharacterController {
@@ -94,4 +95,68 @@ func (c *cc) ReadCsv(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(characters)
+}
+
+// ReadCsvCharacterConcurrently godoc
+// @Summary Character List Csv
+// @Description Read Characters from a Csv File Concurrently
+// @Tags Character
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /readCsvConcurrently [get]
+func (c *cc) ReadCsvConcurrently(w http.ResponseWriter, r *http.Request) {
+
+	typeP := r.URL.Query().Get("type")
+	// Validate that the type parameter has been sent
+	if len(typeP) == 0 {
+		json.NewEncoder(w).Encode("Must indicate if the result will be odd or even")
+		return
+	}
+	itemsP := r.URL.Query().Get("items")
+	// Validate that the items parameter has been sent
+	if len(itemsP) == 0 {
+		json.NewEncoder(w).Encode("Must indicate the quantity of items to retrieve")
+		return
+	}
+
+	// Validate that the items parameter is a numeric value
+	items, err := strconv.Atoi(itemsP)
+	if err != nil {
+		json.NewEncoder(w).Encode("Please enter a numeric value for the 'items' parameter")
+		return
+	}
+
+	itemsPerWorkerP := r.URL.Query().Get("items_per_worker")
+	// Validate that the items_per_worker parameter has been sent
+	if len(itemsPerWorkerP) == 0 {
+		json.NewEncoder(w).Encode("Must send the quantity of items for the workers to retrieve")
+		return
+	}
+	// Validate that the items parameter is a numeric value
+	itemsPerWorker, err := strconv.Atoi(itemsPerWorkerP)
+	if err != nil {
+		json.NewEncoder(w).Encode("Please enter a numeric value for the 'items_per_worker' parameter")
+		return
+	}
+	//Call the Csv Reader Concurrently using the query parameters to adjust the workload
+	characters, err := c.cu.ReadCsvConcurrently(typeP, items, itemsPerWorker)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// Parse the response
+	response, err := json.Marshal(struct {
+		Code int         `json:"code"`
+		Data interface{} `json:"data"`
+	}{http.StatusOK, characters})
+
+	if err != nil {
+		json.NewEncoder(w).Encode("Error while reading the CSV file")
+		return
+	}
+
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
+
 }

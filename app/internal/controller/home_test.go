@@ -1,14 +1,12 @@
-package test
+package controller
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	controller "github.com/luischitala/2022Q2GO-Bootcamp/internal/controller"
 )
 
-var homeController controller.HomeController = controller.NewHomeController()
+var homeController HomeController = NewHomeController()
 
 func TestHome(t *testing.T) {
 	// Create GET Request

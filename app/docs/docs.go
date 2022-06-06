@@ -106,6 +106,26 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/readCsvConcurrently": {
+            "get": {
+                "description": "Read Characters from a Csv File Concurrently",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Character"
+                ],
+                "summary": "Character List Csv",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
         }
     },
     "definitions": {
