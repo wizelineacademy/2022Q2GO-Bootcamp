@@ -36,5 +36,6 @@ func setAPIRoute(g *echo.Group) {
 
 	g.GET("/all", c.HandleGetAllPokemons)
 	g.GET("/:id", c.HandleGetPokemonById)
-	g.PUT("/add", c.HandleAddNewPokemons)
+	g.GET("/items", c.HandleGetPokemonItemsFromCSV)
+	g.PUT("/add/generation/:id", c.HandleAddNewPokemons)
 }

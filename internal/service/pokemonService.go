@@ -1,17 +1,21 @@
 package service
 
-import "github.com/McAdam17/2022Q2GO-Bootcamp/internal/entity"
+import (
+	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/entity"
+)
 
 type PokemonService interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
-	AddNewPokemons([]entity.Pokemon) ([]entity.Pokemon, error)
+	GetPokemonItemsFromCSV(typeReadind string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
+	AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error)
 }
 
 type PokemonRepository interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
-	AddNewPokemons([]entity.Pokemon) error
+	GetPokemonItemsFromCSV(typeReading string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
+	AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error)
 }
 
 type pokemonService struct {
@@ -25,13 +29,17 @@ func NewPokemonService(pokemonRepository PokemonRepository) PokemonService {
 }
 
 func (pKS *pokemonService) GetAllPokemons() ([]entity.Pokemon, error) {
-	return nil, nil
+	return pKS.pokemonRepository.GetAllPokemons()
 }
 
 func (pKS *pokemonService) GetPokemonById(id int) (*entity.Pokemon, error) {
-	return nil, nil
+	return pKS.pokemonRepository.GetPokemonById(id)
 }
 
-func (pKS *pokemonService) AddNewPokemons([]entity.Pokemon) ([]entity.Pokemon, error) {
-	return nil, nil
+func (pKS *pokemonService) GetPokemonItemsFromCSV(typeReading string, items, itemsPerWorkers int) ([]entity.Pokemon, error) {
+	return pKS.pokemonRepository.GetPokemonItemsFromCSV(typeReading, items, itemsPerWorkers)
+}
+
+func (pKS *pokemonService) AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error) {
+	return pKS.pokemonRepository.AddNewPokemons(newPokemons)
 }
