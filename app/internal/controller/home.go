@@ -10,6 +10,10 @@ type HomeResponse struct {
 	Status  bool   `json:"status"`
 }
 
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
 type controller struct {
 }
 
@@ -24,10 +28,11 @@ func NewHomeController() HomeController {
 // Home godoc
 // @Summary Hello World
 // @Description Hello World
-// @Tags General
-// @Accept  json
-// @Produce  json
+// @Tags Description
 // @Success 200 {object} HomeResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
 // @Router / [get]
 func (*controller) Home(w http.ResponseWriter, r *http.Request) {
 	//W will send the response

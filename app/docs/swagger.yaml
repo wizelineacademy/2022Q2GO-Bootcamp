@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  controller.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
   controller.HomeResponse:
     properties:
       message:
@@ -22,19 +27,27 @@ info:
 paths:
   /:
     get:
-      consumes:
-      - application/json
       description: Hello World
-      produces:
-      - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/controller.HomeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controller.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.ErrorResponse'
       summary: Hello World
       tags:
-      - General
+      - Description
   /characters:
     get:
       consumes:
@@ -79,6 +92,22 @@ paths:
       consumes:
       - application/json
       description: Read Characters from a Csv File Concurrently
+      parameters:
+      - description: odd or even
+        in: query
+        name: type
+        required: true
+        type: string
+      - description: Quantity of items to retrieve
+        in: query
+        name: items
+        required: true
+        type: string
+      - description: Quantity of items that each worker will read concurrently
+        in: query
+        name: items_per_worker
+        required: true
+        type: string
       produces:
       - application/json
       responses:

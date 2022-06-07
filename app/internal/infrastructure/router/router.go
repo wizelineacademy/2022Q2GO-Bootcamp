@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type muxRouter struct {
@@ -33,6 +34,12 @@ func (m *muxRouter) POST(uri string, f func(w http.ResponseWriter, r *http.Reque
 }
 
 func (m *muxRouter) SERVE(port string) {
+	// CORS middleware implementation
+	cors := cors.New(cors.Options{
+		AllowedOrigins: []string{"http://127.0.0.1:5050", "https://rickandmortyapi.com/api/character"},
+	})
+	handler := cors.Handler(m.r)
+	fmt.Println(handler)
 	fmt.Printf("Mux HTTP server running on port %v", port)
-	http.ListenAndServe(port, m.r)
+	http.ListenAndServe(port, handler)
 }

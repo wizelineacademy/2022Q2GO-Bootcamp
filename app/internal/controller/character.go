@@ -100,6 +100,9 @@ func (c *cc) ReadCsv(w http.ResponseWriter, r *http.Request) {
 // ReadCsvCharacterConcurrently godoc
 // @Summary Character List Csv
 // @Description Read Characters from a Csv File Concurrently
+// @Param type query string true  "odd or even"
+// @Param items query string true  "Quantity of items to retrieve"
+// @Param items_per_worker query string true  "Quantity of items that each worker will read concurrently"
 // @Tags Character
 // @Accept  json
 // @Produce  json

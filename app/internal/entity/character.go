@@ -25,6 +25,18 @@ type Character struct {
 	Location []Location
 }
 
+type CharacterDB struct {
+	Id      int    `json:"id"`
+	Name    string `json:"name"`
+	Status  string `json:"status"`
+	Species string `json:"species"`
+	Type    string `json:"type"`
+	Gender  string `json:"gender"`
+	Image   string `json:"image"`
+	Url     string `json:"url"`
+	Created string `json:"created"`
+}
+
 type Info struct {
 	Count int         `json:"count"`
 	Pages int         `json:"pages"`

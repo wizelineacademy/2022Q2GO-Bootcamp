@@ -27,14 +27,8 @@ const docTemplate = `{
         "/": {
             "get": {
                 "description": "Hello World",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
                 "tags": [
-                    "General"
+                    "Description"
                 ],
                 "summary": "Hello World",
                 "responses": {
@@ -42,6 +36,24 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/controller.HomeResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ErrorResponse"
                         }
                     }
                 }
@@ -120,6 +132,29 @@ const docTemplate = `{
                     "Character"
                 ],
                 "summary": "Character List Csv",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "odd or even",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Quantity of items to retrieve",
+                        "name": "items",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Quantity of items that each worker will read concurrently",
+                        "name": "items_per_worker",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -129,6 +164,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "controller.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
         "controller.HomeResponse": {
             "type": "object",
             "properties": {

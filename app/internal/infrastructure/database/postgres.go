@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -23,8 +24,10 @@ func NewPostgresRepository(url string) (*PostgresRepository, error) {
 	return &PostgresRepository{db}, nil
 }
 
-func (repo *PostgresRepository) ListCharacter(ctx context.Context, page uint64) ([]*models.Character, error) {
+func (repo *PostgresRepository) ListCharacter(ctx context.Context, page uint64) ([]*models.CharacterDB, error) {
 	//Only allow edit for owners
+	fmt.Println("Hola")
+
 	rows, err := repo.db.QueryContext(ctx, "SELECT * FROM characters LIMIT $1 OFFSET $2", 2, page*2)
 	if err != nil {
 		return nil, err
@@ -36,9 +39,9 @@ func (repo *PostgresRepository) ListCharacter(ctx context.Context, page uint64) 
 		}
 	}()
 
-	var characters []*models.Character
+	var characters []*models.CharacterDB
 	for rows.Next() {
-		var character = models.Character{}
+		var character = models.CharacterDB{}
 		if err = rows.Scan(&character.Id, &character.Name); err == nil {
 			characters = append(characters, &character)
 		}
