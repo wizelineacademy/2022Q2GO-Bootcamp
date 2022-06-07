@@ -14,6 +14,8 @@ WORKDIR /src
 COPY ./go.mod ./go.sum ./
 # Download and install dependencies
 RUN go mod download
+# Dependencies for swagger
+RUN go get -u github.com/swaggo/http-swagger
 
 COPY ./ ./
 # Disable the C++ compiler
