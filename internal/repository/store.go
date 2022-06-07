@@ -14,7 +14,7 @@ import (
 func CreateCSV(empData model.ZipCodeInfo) error {
 	var csvFile *os.File
 	var err error
-	fileName := "exported.csv"
+	fileName := "./data/exported.csv"
 
 	if _, err := os.Stat(fileName); err == nil {
 		// path/to/whatever exists

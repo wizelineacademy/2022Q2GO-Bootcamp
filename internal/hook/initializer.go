@@ -15,7 +15,7 @@ func getcwd() string {
 		os.Exit(1)
 	}
 
-	dataFilePath := fmt.Sprintf("%s/data.csv", pwd)
+	dataFilePath := fmt.Sprintf("%s/data/data.csv", pwd)
 
 	return dataFilePath
 }
