@@ -7,7 +7,7 @@ import (
 	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/utils"
 )
 
-type PokemonRepository interface {
+type pokemonRepositoryI interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
 	GetPokemonItemsFromCSV(typeReading string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
@@ -21,7 +21,7 @@ type pokemonRepository struct {
 	queryDataByName map[string]int
 }
 
-func NewPokemonRepository(fileName string) PokemonRepository {
+func NewPokemonRepository(fileName string) pokemonRepositoryI {
 	arrayData, mapDataByID, mapDataByName, err := utils.ReadPokemonDataFromCSVFile(fileName)
 	if err != nil {
 		panic("Error reading file " + err.Error())
@@ -63,20 +63,28 @@ func (pR *pokemonRepository) GetPokemonItemsFromCSV(typeReading string, items, i
 
 	index := 0
 	for (index < items) && (id < currentDataLen) {
-		pokemon, err := utils.FindPokemonDataFromCSVFile(pR.fileNameStore, id)
+		err := addPokemonWithIDFormCSVFileToArrayAtIndex(id, pR.fileNameStore, pokemons, index)
 		if err != nil {
-			return nil, err
+
 		}
 
-		pokemons[index] = *pokemon
 		index++
-
 		id += 2
 	}
 
 	pokemons = utils.CleanPokemonsResponse(pokemons)
 
 	return pokemons, nil
+}
+
+func addPokemonWithIDFormCSVFileToArrayAtIndex(id int, fileName string, pokemons []entity.Pokemon, index int) error {
+	pokemon, err := utils.FindPokemonDataFromCSVFile(fileName, id)
+	if err != nil {
+		return err
+	}
+
+	pokemons[index] = *pokemon
+	return nil
 }
 
 func (pR *pokemonRepository) AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error) {

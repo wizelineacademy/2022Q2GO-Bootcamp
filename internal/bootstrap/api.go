@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/controler"
+	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/controller"
 	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/repository"
 	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/service"
 	"github.com/labstack/echo/v4"
@@ -28,7 +28,7 @@ func (a *app) setupServer() {
 }
 
 func setAPIRoute(g *echo.Group) {
-	c := controler.NewPokemonController(
+	c := controller.NewPokemonController(
 		service.NewPokemonService(
 			repository.NewPokemonRepository("pokemons.csv"),
 		),

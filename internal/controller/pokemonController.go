@@ -1,4 +1,4 @@
-package controler
+package controller
 
 import (
 	"encoding/json"
@@ -12,14 +12,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type PokemonController interface {
+type pokemonControllerI interface {
 	HandleGetAllPokemons(ctx echo.Context) error
 	HandleGetPokemonById(ctx echo.Context) error
 	HandleGetPokemonItemsFromCSV(ctx echo.Context) error
 	HandleAddNewPokemons(ctx echo.Context) error
 }
 
-type PokemonService interface {
+type pokemonService interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
 	GetPokemonItemsFromCSV(typeReading string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
@@ -27,10 +27,10 @@ type PokemonService interface {
 }
 
 type pokemonController struct {
-	pokemonService PokemonService
+	pokemonService pokemonService
 }
 
-func NewPokemonController(pokemonService PokemonService) PokemonController {
+func NewPokemonController(pokemonService pokemonService) pokemonControllerI {
 	return &pokemonController{
 		pokemonService: pokemonService,
 	}
@@ -92,6 +92,12 @@ func (pKC *pokemonController) HandleGetPokemonItemsFromCSV(ctx echo.Context) err
 
 func (pKC *pokemonController) HandleAddNewPokemons(ctx echo.Context) error {
 	generationID := ctx.Param("id")
+	id := ctx.Param("id")
+	_, err := strconv.Atoi(id)
+	if err != nil {
+		ctx.Logger().Error(err)
+		return err
+	}
 
 	resp, err := http.Get("https://pokeapi.co/api/v2/generation/" + generationID)
 	if err != nil {
