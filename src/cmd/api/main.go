@@ -15,6 +15,7 @@ func main() {
     m.HandleFunc("/", controller.GetGreetingHandler)
 	m.HandleFunc("/getcsvdata", controller.GetCSVHandler)
 	m.HandleFunc("/getexternalapidata", controller.GetExternalApiHandler)
+    m.HandleFunc("/getcsvdataconcurrently", controller.GetCSVConcurrentlyHandler)
 
 	fmt.Println("Server Listening at port 8000")
 
