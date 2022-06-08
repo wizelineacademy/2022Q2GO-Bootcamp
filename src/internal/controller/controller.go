@@ -5,12 +5,9 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"strconv"
-	"time"
-	"sync"
 	"github.com/waltergomezda/2022Q2GO-Bootcamp/internal/service"
 	"github.com/waltergomezda/2022Q2GO-Bootcamp/internal/entity"
 	"github.com/waltergomezda/2022Q2GO-Bootcamp/internal/repository"
-	"github.com/waltergomezda/2022Q2GO-Bootcamp/internal/workerpool"
 )
 // GetHandler handles the index route
 func GetGreetingHandler(w http.ResponseWriter, r *http.Request) {
@@ -82,98 +79,80 @@ func GetCSVConcurrentlyHandler(w http.ResponseWriter, r *http.Request) {
 			http.StatusBadRequest)
 	}
 
-	totalItems, err := strconv.Atoi(strItems)
+	maxItems, err := strconv.Atoi(strItems)
     if err != nil {
 		fmt.Println(err)
 		http.Error(w, "Invalid Items param",
 		http.StatusBadRequest)
     }
 
-	totalItemsPerWorker, err := strconv.Atoi(strItemsPerWorkers)
+	maxItemsPerWorker, err := strconv.Atoi(strItemsPerWorkers)
     if err != nil {
 		http.Error(w, "Invalid ItemsPerWorkers param",
 		http.StatusBadRequest)
     }
 
 	fmt.Println("type =>", itemType)
-	fmt.Println("items =>", totalItems)
-	fmt.Println("itemsPerWorkers =>", totalItemsPerWorker)
+	fmt.Println("items =>", maxItems)
+	fmt.Println("itemsPerWorkers =>", maxItemsPerWorker)
+
+ 
+	numberOfWorkers := 7
+	processedItems :=0
 
 	//***********************************************
 
-	//Reading CSV
+	//Load records from CSV file
 	repo:= repository.NewCsvRepository("data.csv")
 	svc := service.NewCsvService(repo)
-	results, err := svc.ExtractCsvRecords()
-	if err != nil {
-		http.Error(w, "Error retrieving CSV data",
-			http.StatusInternalServerError)
+	data, err := svc.ExtractCsvRecords()
+	if err != nil { 
 	}
-	
-	fmt.Println(totalItems, totalItemsPerWorker)
 
-	// declare worker pool
-	pool := workerpool.NewGoroutinePool(2)
-    taskSize := totalItems
-	taskCounterPerWorker := make(map[int]int)
-	resultsPerWorker := make(map[int]string)
-	fmt.Println("taksCounterPerWorker",taskCounterPerWorker, resultsPerWorker)
-    
-    //wait for jobs to finish
-    wg := &sync.WaitGroup{}
+	//Create job and result channel
+	numJobs := len(data)
+    jobs := make(chan int, numJobs)
+    results := make(chan string, numJobs)
+	var done = make(chan bool)
 
-	readTaskFn := func(workerID int, name string, line int){
-		// if taskCounterPerWorker[workerID] > totalItemsPerWorker {
-		// 	fmt.Println("max items reached WorkerID",workerID )
-		// 	return
-		// }
-
-		fmt.Println("inputvalues:","workerID:",workerID, "name:", name, "line:", line)
-		time.Sleep(time.Second)
-		
-		tempResult := results[line]
-		taskCounterPerWorker[workerID] ++
-		if _, ok := resultsPerWorker[workerID]; ok==false {
-			resultsPerWorker[workerID] = ""
-		}
-		resultsPerWorker[workerID] = fmt.Sprint(resultsPerWorker[workerID], " Line: ", line ," key:", tempResult.Key , " value: ", tempResult.Value)
-	
-		if name != ""{
-			fmt.Println( fmt.Sprint("worker", workerID ," finished ", name))
-		}
-		wg.Done()
+	//generate workers
+	for w := 1; w <= numberOfWorkers; w++ {
+        go func (workerId int, jobs <-chan int, results chan<- string) {
+			processedItemsPerWorker :=0
+			for idx := range jobs {
+				if processedItems>=maxItems || processedItemsPerWorker >= maxItemsPerWorker {
+					// fmt.Println("max element reach at worker",workerId, processedItems, maxItems, processedItemsPerWorker, maxItemsPerWorker)
+					break
+				}
+				record := data[idx-1]
+				if (itemType == "odd" && record.Key%2==0) || (itemType == "even" && record.Key%2==1) {
+					 continue
+		 		}
+				processedItems++
+				processedItemsPerWorker++
+				// fmt.Println("send worker:",workerId," processed line Number: ", idx ," with content:", record.Key,"|", record.Value)
+				results <- fmt.Sprint(" worker:",workerId," processed line Number: ", idx ," with content:", record.Key,"|", record.Value)
+				
+			}
+			done <-true
+		}(w, jobs, results)
     }
-    var tasks []testTask
-	validTaskSize :=0
-	
-	//generate tasks considering filter type
-    for v:=0; v < taskSize; v++{
-		if v > len(results){
-			break
-		}
-		if (itemType == "odd" && v%2==0) || (itemType == "even" && v%2==1) {
-			continue
-		}
-        tasks = append(tasks, testTask{
-            Name: fmt.Sprint("task ", v ),
-			Line: v,
-            TaskProcessor: readTaskFn,
-        })
-		validTaskSize++
-    }
-	wg.Add(validTaskSize)
-    for _, task := range tasks{
-        pool.ScheduleWork(task)
-    }
-    pool.Close()
-    wg.Wait()
 
+	//load job channel, each element represent a position in Data
+	for idx := 1; idx <= numJobs; idx++ {
+        jobs <- idx
+    }
+    close(jobs)
+
+	// wait until all workers get their jobs completed
+	for i := 1; i <= numberOfWorkers; i++ {
+        <- done
+    }
 	//Prepare response
 	var content []string 
-	for workerId, value := range resultsPerWorker {
-        fmt.Println("Worker",workerId, ":", value)
-		content = append(content,fmt.Sprint("Worker",workerId, ":", value)  ) 
-    }
+	for a := 1; a <= processedItems; a++ {
+		content = append(content, <-results) 
+    } 
  
  	jsonBody, err := json.Marshal(content)
 	if err != nil {
