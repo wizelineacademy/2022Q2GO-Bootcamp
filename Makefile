@@ -26,3 +26,8 @@ serve:
 	@make kill
 	@make build;
 	./${PROG}
+
+test:
+	@make kill
+	@make build;
+	go test

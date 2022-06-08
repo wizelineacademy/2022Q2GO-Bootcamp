@@ -23,10 +23,10 @@ func ReadCSVFromUrl(url string) (data []model.Pokemon, err error) {
 		return
 	}
 
-	for idx, row := range csvLines {
-		if idx == 0 {
-			continue
-		}
+	for _, row := range csvLines {
+		// if idx == 0 {
+		// 	continue
+		// }
 
 		newpokemon := model.Pokemon{
 			ID:         row[0],

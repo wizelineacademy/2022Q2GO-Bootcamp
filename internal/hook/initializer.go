@@ -8,7 +8,7 @@ import (
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/repository"
 )
 
-func getcwd() string {
+func Getcwd() string {
 	pwd, err := os.Getwd()
 	if err != nil {
 		fmt.Println(err)
@@ -24,8 +24,8 @@ var Pokemonss []model.Pokemon
 
 func init() {
 	//Pokemons
-	fmt.Println(getcwd())
-	data, err := repository.ReadCSVFromUrl(getcwd())
+	fmt.Println(Getcwd())
+	data, err := repository.ReadCSVFromUrl(Getcwd())
 
 	if err != nil {
 		fmt.Println(err)
