@@ -12,13 +12,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type pokemonControllerI interface {
-	HandleGetAllPokemons(ctx echo.Context) error
-	HandleGetPokemonById(ctx echo.Context) error
-	HandleGetPokemonItemsFromCSV(ctx echo.Context) error
-	HandleAddNewPokemons(ctx echo.Context) error
-}
-
 type pokemonService interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
@@ -30,7 +23,7 @@ type pokemonController struct {
 	pokemonService pokemonService
 }
 
-func NewPokemonController(pokemonService pokemonService) pokemonControllerI {
+func NewPokemonController(pokemonService pokemonService) *pokemonController {
 	return &pokemonController{
 		pokemonService: pokemonService,
 	}
@@ -40,7 +33,7 @@ func (pKC *pokemonController) HandleGetAllPokemons(ctx echo.Context) error {
 	pokemons, err := pKC.pokemonService.GetAllPokemons()
 	if err != nil {
 		ctx.Logger().Error(err)
-		return err
+		return ctx.JSON(http.StatusInternalServerError, utils.ErrorJsonStructResponse("error getting all pokemons"))
 	}
 
 	return ctx.JSON(http.StatusOK, pokemons)
@@ -51,7 +44,7 @@ func (pKC *pokemonController) HandleGetPokemonById(ctx echo.Context) error {
 	intId, err := strconv.Atoi(id)
 	if err != nil {
 		ctx.Logger().Error(err)
-		return err
+		return ctx.JSON(http.StatusBadRequest, utils.ErrorJsonStructResponse("bad id format"))
 	}
 
 	pokemon, err := pKC.pokemonService.GetPokemonById(intId)

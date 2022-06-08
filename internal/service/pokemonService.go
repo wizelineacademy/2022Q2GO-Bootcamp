@@ -4,13 +4,6 @@ import (
 	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/entity"
 )
 
-type pokemonServiceI interface {
-	GetAllPokemons() ([]entity.Pokemon, error)
-	GetPokemonById(id int) (*entity.Pokemon, error)
-	GetPokemonItemsFromCSV(typeReadind string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
-	AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error)
-}
-
 type pokemonRepository interface {
 	GetAllPokemons() ([]entity.Pokemon, error)
 	GetPokemonById(id int) (*entity.Pokemon, error)
@@ -22,7 +15,7 @@ type pokemonService struct {
 	pokemonRepository pokemonRepository
 }
 
-func NewPokemonService(pokemonRepository pokemonRepository) pokemonServiceI {
+func NewPokemonService(pokemonRepository pokemonRepository) *pokemonService {
 	return &pokemonService{
 		pokemonRepository: pokemonRepository,
 	}

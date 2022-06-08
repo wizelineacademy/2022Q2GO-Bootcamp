@@ -39,7 +39,7 @@ func ReadPokemonDataFromCSVFile(fileName string) ([]entity.Pokemon, map[int]stri
 		name = strings.ToLower(name)
 
 		pokemon := entity.Pokemon{
-			Id:   id,
+			ID:   id,
 			Name: name,
 		}
 
@@ -78,7 +78,7 @@ func FindPokemonDataFromCSVFile(fileName string, pokemonID int) (*entity.Pokemon
 		name = strings.ToLower(name)
 
 		if id == pokemonID {
-			pokemon.Id = id
+			pokemon.ID = id
 			pokemon.Name = name
 		}
 	}
@@ -99,10 +99,10 @@ func WritePokemonsOnCSV(pokemons []entity.Pokemon, fileName string) error {
 	defer csvFile.Close()
 
 	for _, pokemon := range pokemons {
-		pokemonPlainText := fmt.Sprintf("\n%d,%s", pokemon.Id, pokemon.Name)
+		pokemonPlainText := fmt.Sprintf("\n%d,%s", pokemon.ID, pokemon.Name)
 
 		if _, err = csvFile.WriteString(pokemonPlainText); err != nil {
-			panic(err)
+			return err
 		}
 	}
 

@@ -6,7 +6,7 @@ func CleanPokemonsResponse(pokemons []entity.Pokemon) []entity.Pokemon {
 	newPokemons := []entity.Pokemon{}
 
 	for _, pokemon := range pokemons {
-		if pokemon.Id == 0 {
+		if pokemon.ID == 0 {
 			break
 		}
 

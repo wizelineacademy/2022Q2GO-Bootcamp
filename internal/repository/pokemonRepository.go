@@ -7,13 +7,6 @@ import (
 	"github.com/McAdam17/2022Q2GO-Bootcamp/internal/utils"
 )
 
-type pokemonRepositoryI interface {
-	GetAllPokemons() ([]entity.Pokemon, error)
-	GetPokemonById(id int) (*entity.Pokemon, error)
-	GetPokemonItemsFromCSV(typeReading string, items, itemsPerWorkers int) ([]entity.Pokemon, error)
-	AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error)
-}
-
 type pokemonRepository struct {
 	fileNameStore   string
 	readData        []entity.Pokemon
@@ -21,7 +14,7 @@ type pokemonRepository struct {
 	queryDataByName map[string]int
 }
 
-func NewPokemonRepository(fileName string) pokemonRepositoryI {
+func NewPokemonRepository(fileName string) *pokemonRepository {
 	arrayData, mapDataByID, mapDataByName, err := utils.ReadPokemonDataFromCSVFile(fileName)
 	if err != nil {
 		panic("Error reading file " + err.Error())
@@ -46,7 +39,7 @@ func (pR *pokemonRepository) GetPokemonById(id int) (*entity.Pokemon, error) {
 	}
 
 	return &entity.Pokemon{
-		Id:   id,
+		ID:   id,
 		Name: pokemonName,
 	}, nil
 }
@@ -92,34 +85,38 @@ func (pR *pokemonRepository) AddNewPokemons(newPokemons []string) ([]entity.Poke
 
 	for _, pokemonName := range newPokemons {
 		_, pokemonAlreadyExists := pR.queryDataByName[pokemonName]
-		if !pokemonAlreadyExists {
-			if startIndex == -1 {
-				startIndex = len(pR.readData)
-			}
-
-			newPokemonID := len(pR.readData) + 1
-			newPokemon := &entity.Pokemon{
-				Id:   newPokemonID,
-				Name: pokemonName,
-			}
-
-			pR.addNewPokemonToMemoryData(newPokemon)
+		if pokemonAlreadyExists {
+			continue
 		}
+
+		if startIndex == -1 {
+			startIndex = len(pR.readData)
+		}
+
+		newPokemonID := len(pR.readData) + 1
+		newPokemon := &entity.Pokemon{
+			ID:   newPokemonID,
+			Name: pokemonName,
+		}
+
+		pR.addNewPokemonToMemoryData(newPokemon)
 	}
 
-	if startIndex >= 0 {
-		err := pR.addNewPokemonsToCSV(startIndex)
-		if err != nil {
-			return nil, err
-		}
+	if startIndex == -1 {
+		return pR.readData, nil
+	}
+
+	err := pR.addNewPokemonsToCSV(startIndex)
+	if err != nil {
+		return nil, err
 	}
 
 	return pR.readData, nil
 }
 
 func (pR *pokemonRepository) addNewPokemonToMemoryData(newPokemon *entity.Pokemon) {
-	pR.queryDataByID[newPokemon.Id] = newPokemon.Name
-	pR.queryDataByName[newPokemon.Name] = newPokemon.Id
+	pR.queryDataByID[newPokemon.ID] = newPokemon.Name
+	pR.queryDataByName[newPokemon.Name] = newPokemon.ID
 
 	pR.readData = append(pR.readData, *newPokemon)
 }
