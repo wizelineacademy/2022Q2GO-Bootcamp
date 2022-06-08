@@ -23,13 +23,18 @@ func NewConfig() (*Config, error) {
 		log.Fatal("Error loading .env file")
 
 	}
-	if os.Getenv("PORT") == "" {
+	c.Port = os.Getenv("PORT")
+	if c.Port == "" {
 		return nil, errors.New("Port is required")
 	}
-	if os.Getenv("JWT_SECRET") == "" {
+	c.JWTSecret = os.Getenv("JWT_SECRET")
+	if c.JWTSecret == "" {
 		return nil, errors.New("Secret is required")
 	}
-	if os.Getenv("DATABASE_URL") == "" {
+
+	c.DatabaseUrl = os.Getenv("DATABASE_URL")
+
+	if c.DatabaseUrl == "" {
 		return nil, errors.New("Database is required")
 	}
 	c.Port = os.Getenv("PORT")

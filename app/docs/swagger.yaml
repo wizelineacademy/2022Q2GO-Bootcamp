@@ -53,6 +53,11 @@ paths:
       consumes:
       - application/json
       description: Read Characters from database
+      parameters:
+      - description: Retrieve a Character by id
+        in: query
+        name: id
+        type: string
       produces:
       - application/json
       responses:
@@ -65,7 +70,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: Read Characters from the Rick & Morty's API
+      description: Read Characters from the Rick & Morty's API and wirtes the response
+        into a CSV File
       produces:
       - application/json
       responses:
@@ -93,7 +99,7 @@ paths:
       - application/json
       description: Read Characters from a Csv File Concurrently
       parameters:
-      - description: odd or even
+      - description: Retrieve 'odd' or 'even' ids
         in: query
         name: type
         required: true

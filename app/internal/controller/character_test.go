@@ -9,8 +9,10 @@ import (
 	usecase "github.com/luischitala/2022Q2GO-Bootcamp/internal/usecase"
 )
 
-var rcsv = repository.NewCsvRepository()
-var cu = usecase.NewCharacterUseCase(rcsv)
+var rcsv, _ = repository.NewCsvRepository()
+
+var cu, _ = usecase.NewCharacterUseCase(rcsv)
+
 var characterController CharacterController = NewCharacterController(cu)
 
 func TestCharactersApi(t *testing.T) {
@@ -19,7 +21,7 @@ func TestCharactersApi(t *testing.T) {
 	request, _ := http.NewRequest("GET", "/charactersApi", nil)
 
 	// Assign HTTP handler
-	handler := http.HandlerFunc(characterController.ListCharacterApi)
+	handler := http.HandlerFunc(characterController.GetCharactersAndWriteOnCsv)
 
 	// Record HTTP Response
 	response := httptest.NewRecorder()

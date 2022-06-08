@@ -1,7 +1,7 @@
 package router
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -39,7 +39,7 @@ func (m *muxRouter) SERVE(port string) {
 		AllowedOrigins: []string{"http://127.0.0.1:5050", "https://rickandmortyapi.com/api/character"},
 	})
 	handler := cors.Handler(m.r)
-	fmt.Println(handler)
-	fmt.Printf("Mux HTTP server running on port %v", port)
+	log.Println(handler)
+	log.Printf("Mux HTTP server running on port %v", port)
 	http.ListenAndServe(port, handler)
 }

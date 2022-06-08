@@ -72,6 +72,14 @@ const docTemplate = `{
                     "Character"
                 ],
                 "summary": "Character List DB",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Retrieve a Character by id",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -81,7 +89,7 @@ const docTemplate = `{
         },
         "/charactersApi": {
             "get": {
-                "description": "Read Characters from the Rick \u0026 Morty's API",
+                "description": "Read Characters from the Rick \u0026 Morty's API and wirtes the response into a CSV File",
                 "consumes": [
                     "application/json"
                 ],
@@ -135,7 +143,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "odd or even",
+                        "description": "Retrieve 'odd' or 'even' ids",
                         "name": "type",
                         "in": "query",
                         "required": true

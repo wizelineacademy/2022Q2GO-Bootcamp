@@ -32,21 +32,26 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//Repositories
-	rcsv := repository.NewCsvRepository()
-	// Database
+	// Database Repository
 	repo, err := database.NewPostgresRepository(c.DatabaseUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 	repository.SetRepository(repo)
 
+	//CSV Repository
+	rcsv, err := repository.NewCsvRepository()
+	if err != nil {
+		log.Fatal(err)
+	}
+	//Use cases
+	cu, err := usecase.NewCharacterUseCase(rcsv)
+	if err != nil {
+		log.Fatal(err)
+	}
 	//Router
 	r := mux.NewRouter()
 	router := infrastructure.NewMuxRouter(r)
-
-	//Use cases
-	cu := usecase.NewCharacterUseCase(rcsv)
 
 	//Controller
 	hc := controller.NewHomeController()
@@ -55,7 +60,7 @@ func main() {
 	//Routes
 	router.GET("/", hc.Home)
 	router.GET("/characters", cc.ListCharacter)
-	router.GET("/charactersApi", cc.ListCharacterApi)
+	router.GET("/charactersApi", cc.GetCharactersAndWriteOnCsv)
 	router.GET("/readCsv", cc.ReadCsv)
 	router.GET("/readCsvConcurrently", cc.ReadCsvConcurrently)
 	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)

@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	ListCharacter(ctx context.Context, page uint64) ([]*models.CharacterDB, error)
+	ListCharacter(ctx context.Context, page uint64) ([]*models.Character, error)
 	Close() error
 }
 
@@ -21,6 +21,6 @@ func SetRepository(repository Repository) {
 	implementation = repository
 }
 
-func ListCharacter(ctx context.Context, page uint64) ([]*models.CharacterDB, error) {
+func ListCharacter(ctx context.Context, page uint64) ([]*models.Character, error) {
 	return implementation.ListCharacter(ctx, page)
 }
