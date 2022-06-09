@@ -1,10 +1,54 @@
+
 # 2022 Q2 Go Bootcamp
+
+## Description
+
+Project for the Go Bootcamp from Wizeline.
+
+### Features
+Features included:
+- Go
+
+## Requirements:
+
+- Go --Version 1.7
+
+## Installation
+1. Clone or download de repository:
+    ```
+    $ git clone https://github.com//krmirandas/2022Q2GO-Bootcamp
+    ``` 
+## Basic Usage
+You can test with postman or web browser.
+
+## Enpoints
+
+Base url:
+
+http://localhost:8000/
+
+- /pokemon
+- /pokemon/:id
+- /zipcode/:id
+- /concurrent Requires 2 Query parameters items(int), items_per_worker(int)
+	 
+
+## Unit test
+   ```bash
+    $ cd 22022Q2GO-Bootcamp/test
+    $ go test -v
+  ```
+## What's missing ?
+There is a lot of things that I could do to improve this API. 
+Some that I have identified are:
+
+* Refactoring
+* Improve logging
 
 ## Introduction
 
 Thank you for participating in the GO Bootcamp course!
 Here, you'll find instructions for completing your certification.
-***The documentation of the first deliverable can be found below***
 
 ## The Challenge
 
@@ -172,58 +216,3 @@ For submitting your work, you should follow these steps:
 - [Concurrency (goroutines, channels, workers)](https://medium.com/@trevor4e/learning-gos-concurrency-through-illustrations-8c4aff603b3)
 - [Concurrency Part 2](https://www.youtube.com/watch?v=LvgVSSpwND8)
 
-
-## First Deliverable
-
-To handle routing we will use Mux, To install it, execute the following command:
-
-```bash
-$ go get -u github.com/gorilla/mux
-```
-To compile and create an executable
-
-* Run ``` $ go build ```
-
-Then
-
-* Run ```$ ./2022Q2GO-Bootcamp ```
-
-### How to use ?
-
-So far, only one endpoint is available in this deliverable.
-
-In Postman is posible test the GET method through this URL
-
-```bash
-http://localhost:8000/pokemon/1
-```
-
-La respuesta será
-
-```json
-{
-    "id": "1",
-    "name": "Bulbasaur",
-    "type1": "Grass",
-    "type2": "Poison",
-    "total": "318",
-    "hp": "45",
-    "attack": "49",
-    "defense": "49",
-    "spatk": "65",
-    "spdef": "65",
-    "speed": "45",
-    "generation": "1",
-    "legendary": "False"
-}
-```
-
-The CSV being queried is in a repository: https://gist.githubusercontent.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6/raw/92200bc0a673d5ce2110aaad4544ed6c4010f687/pokemon.csv
-
-### What's missing ?
-There is a lot of things that I could do to improve this API. 
-Some that I have identified are:
-
-* Testing
-* Refactoring
-* Improve logging
