@@ -89,8 +89,8 @@ func (c *cc) GetCharactersAndWriteOnCsv(w http.ResponseWriter, r *http.Request) 
 		log.Fatalln(err)
 	}
 	// Write the result of the api request, on the csv if it exists
-	charStruct, err, exists := c.cu.WriteCsv(apiResponse)
-	if err != nil || !exists {
+	charStruct, err, _ := c.cu.WriteCsv(apiResponse)
+	if err != nil {
 		log.Println(err)
 		HandleError(w, http.StatusInternalServerError, "Error while writing CSV file")
 		return

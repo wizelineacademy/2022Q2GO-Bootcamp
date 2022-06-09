@@ -120,5 +120,5 @@ func (c *csvr) WriteCsvFile() (*csv.Writer, *os.File, error) {
 		return nil, nil, err
 	}
 
-	return csvwriter, csvFile, err
+	return csvwriter, csvFile, nil
 }

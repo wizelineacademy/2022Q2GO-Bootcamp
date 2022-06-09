@@ -85,8 +85,8 @@ http://127.0.0.1:5050
 
 ## Unit test
    ```bash
-    $ cd 2022Q2GO-Bootcamp/app
-    $ go test
+    $ cd 2022Q2GO-Bootcamp/app/internal/controller
+    $ go test -v
   ```
     
 ## Introduction
