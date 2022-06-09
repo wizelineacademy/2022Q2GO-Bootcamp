@@ -10,7 +10,9 @@ import (
 
 func main() {
 	interfaceAdapterServices := interfaceadapter.NewServices()
-	appServices := app.NewServices(interfaceAdapterServices.DataRepository)
-	inputPortServices := inputport.NewServices(appServices)
+	//appServices := app.NewServices(interfaceAdapterServices.DataRepository)
+	appCoffeeServices := app.NewCoffeeService(interfaceAdapterServices.CoffeeRepository)
+	//inputPortServices := inputport.NewServices(appServices)
+	inputPortServices := inputport.NewServices(appCoffeeServices)
 	inputPortServices.Server.ListenAndServe(":8080")
 }

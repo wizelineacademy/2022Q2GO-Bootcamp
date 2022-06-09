@@ -7,12 +7,14 @@ import (
 
 // Services contains the exposed services of interface adapters
 type Services struct {
-	DataRepository data.Repository
+	DataRepository   data.Repository
+	CoffeeRepository data.RepoCoffee
 }
 
 // NewServices Instantiates the interface adapter services
 func NewServices() Services {
 	return Services{
-		DataRepository: file.NewRepo(),
+		DataRepository:   file.NewRepo(),
+		CoffeeRepository: file.NewRepoC(),
 	}
 }

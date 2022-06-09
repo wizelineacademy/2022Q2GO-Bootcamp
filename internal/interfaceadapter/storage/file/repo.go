@@ -2,6 +2,10 @@ package file
 
 import (
 	"encoding/csv"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"strconv"
 
@@ -13,10 +17,21 @@ type Repo struct {
 	datamap map[int64]string
 }
 
+// RepoC implements RepoCofee Interface
+type RepoC struct {
+	coffees map[int64]data.Coffee
+}
+
 // NewRepo Constructor
 func NewRepo() Repo {
 	datamap := make(map[int64]string)
 	return Repo{datamap}
+}
+
+// NewRepoC Constructor
+func NewRepoC() RepoC {
+	coffees := make(map[int64]data.Coffee)
+	return RepoC{coffees}
 }
 
 //Find Returns data with the provided id
@@ -27,6 +42,28 @@ func (r Repo) Find(id int64) (*data.Data, error) {
 	}
 	data := data.Data{Id: id, Item: r.datamap[id]}
 	return &data, nil
+}
+
+// GetCoffee returs all stored coffees
+func (c RepoC) GetCoffee() ([]data.Coffee, error) {
+	const url = "https://random-data-api.com/api/coffee/random_coffee?size=5"
+
+	res, err := http.DefaultClient.Get(url)
+	if err != nil {
+		return nil, fmt.Errorf("unable to reach [%v]: %v", url, err)
+	}
+	content, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("unable to read response body: %v", err)
+	}
+
+	var values []data.Coffee
+	err = json.Unmarshal(content, &values)
+	if err != nil {
+		return nil, fmt.Errorf("unable to decode response: %v", err)
+	}
+
+	return values, nil
 }
 
 func fillDatamap(datamap map[int64]string) error {

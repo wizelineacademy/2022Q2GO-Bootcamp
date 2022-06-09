@@ -30,6 +30,7 @@ func (httpServer *Server) AddDataHTTPRoutes() {
 	const dataHTTPRoutePath = "/findid"
 	//Queries
 	httpServer.router.HandleFunc(dataHTTPRoutePath+"/{"+data.GetDataIDURLParam+"}", data.NewHandler(httpServer.appServices.DataServices).Find).Methods("GET")
+	httpServer.router.HandleFunc("/coffees", data.NewCoffeeHandler(httpServer.appServices.CoffeeServices).GetCoffee).Methods("GET")
 }
 
 // ListenAndServe Starts listening for requests
