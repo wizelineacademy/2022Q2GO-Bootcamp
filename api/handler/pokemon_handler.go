@@ -1,27 +1,16 @@
 package handler
 
 import (
-	"log"
-	"net/http"
-	"strconv"
-
 	"github.com/esvarez/go-api/internal/pokemon"
 	"github.com/esvarez/go-api/pkg/web"
+	"log"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
 const (
-	pokemonID           = "pokemon_id"
-	items               = "items"
-	tpe                 = "type"
-	itemsPerWorker      = "items_per_workers"
-	defaultItems        = 5
-	defaultItemsWorkers = 1
-)
-
-var (
-	validTypes = map[string]bool{"odd": true, "even": true}
+	pokemonID = "pokemon_id"
 )
 
 type PokemonHandler struct {
@@ -57,41 +46,23 @@ func (p PokemonHandler) findPokemon() http.Handler {
 func (p PokemonHandler) getPokemon() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
-		if _, ok := params[tpe]; !ok {
-			log.Println("no type")
-			web.BadRequestError.Send(w)
-			return
-
-		}
-
-		if val, ok := validTypes[params[tpe][0]]; !ok {
-			log.Println("invalid type", val)
-			web.BadRequestError.Send(w)
+		t, webErr := getValidType(params)
+		if webErr != nil {
+			log.Println("invalid type")
+			webErr.Send(w)
 			return
 		}
 
-		t := params[tpe][0]
-		var itms, itmsWorker int
-		if val, ok := params[items]; ok {
-			itms, _ = strconv.Atoi(val[0])
-			if itms < 1 {
-				log.Println("invalid items", val[0])
-				web.BadRequestError.Send(w)
-				return
-			}
-		} else {
-			itms = 5
+		itms, webErr := getValidItems(params)
+		if webErr != nil {
+			webErr.Send(w)
+			return
 		}
 
-		if val, ok := params[itemsPerWorker]; ok {
-			itmsWorker, _ = strconv.Atoi(val[0])
-			if itmsWorker < 1 {
-				log.Println("invalid items", val[0])
-				web.BadRequestError.Send(w)
-				return
-			}
-		} else {
-			itmsWorker = 1
+		itmsWorker, webErr := getValidItemsWorkers(params)
+		if webErr != nil {
+			webErr.Send(w)
+			return
 		}
 
 		response, err := p.pokemonService.GetPokemon(t, itms, itmsWorker)
