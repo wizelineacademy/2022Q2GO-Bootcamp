@@ -1,5 +1,6 @@
 swagger:
 	swagger generate spec -o ./api/swagger.yaml --scan-models
 
-run:
-	go build -o /out/server && ./server
+serve:
+	go build cmd/main.go
+	./main
