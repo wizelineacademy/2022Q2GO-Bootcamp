@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/mvrilo/go-redoc"
 	fiberredoc "github.com/mvrilo/go-redoc/fiber"
-	"toh-api/pkg/parser"
+	"toh-api/cmd/server/api"
 )
 
 type swaggerRoutes struct{}
@@ -24,7 +24,7 @@ func getSwagger() fiber.Handler {
 	return fiberredoc.New(doc)
 }
 
-func (u swaggerRoutes) RegisterRoutes(api *parser.ApiService) {
+func (u swaggerRoutes) RegisterRoutes(api *api.ApiService) {
 	api.GetPublic("/swagger", getSwagger())
 	api.GetPublicStatic("/swagger.yaml", "./swagger.yaml")
 }

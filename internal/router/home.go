@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"toh-api/pkg/parser"
+	"toh-api/cmd/server/api"
 )
 
 type homeRoutes struct{}
@@ -22,6 +22,6 @@ func (u homeRoutes) getHome(ctx *fiber.Ctx) error {
 	return ctx.JSON(home)
 }
 
-func (u homeRoutes) RegisterRoutes(api *parser.ApiService) {
+func (u homeRoutes) RegisterRoutes(api *api.ApiService) {
 	api.GetPublic("/", u.getHome)
 }

@@ -14,20 +14,18 @@
 // swagger:meta
 package routes
 
-import (
-	"toh-api/pkg/parser"
-)
+import "toh-api/cmd/server/api"
 
 type routeAbstract interface {
-	RegisterRoutes(*parser.ApiService)
+	RegisterRoutes(*api.ApiService)
 }
 
 type routeService struct {
-	api   *parser.ApiService
+	api   *api.ApiService
 	route routeAbstract
 }
 
-func New(api *parser.ApiService, routes routeAbstract) routeService {
+func New(api *api.ApiService, routes routeAbstract) routeService {
 	return routeService{
 		api:   api,
 		route: routes,
