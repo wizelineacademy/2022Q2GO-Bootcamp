@@ -12,6 +12,7 @@ type pokemonRepository struct {
 	readData        []entity.Pokemon
 	queryDataByID   map[int]string
 	queryDataByName map[string]int
+	wokerPool       utils.WorkerPool
 }
 
 func NewPokemonRepository(fileName string) *pokemonRepository {
@@ -20,11 +21,15 @@ func NewPokemonRepository(fileName string) *pokemonRepository {
 		panic("Error reading file " + err.Error())
 	}
 
+	workerPool := utils.NewWorkerPool(3)
+	defer workerPool.Run()
+
 	return &pokemonRepository{
 		fileNameStore:   fileName,
 		readData:        arrayData,
 		queryDataByID:   mapDataByID,
 		queryDataByName: mapDataByName,
+		wokerPool:       workerPool,
 	}
 }
 
@@ -55,29 +60,34 @@ func (pR *pokemonRepository) GetPokemonItemsFromCSV(typeReading string, items, i
 	}
 
 	index := 0
-	for (index < items) && (id < currentDataLen) {
-		err := addPokemonWithIDFormCSVFileToArrayAtIndex(id, pR.fileNameStore, pokemons, index)
-		if err != nil {
 
+	results := make(chan utils.Result, items)
+
+	for (index < items) && (id < currentDataLen) {
+		task := utils.Task{
+			Index:       index,
+			ID:          id,
+			Pokemons:    pokemons,
+			FileName:    pR.fileNameStore,
+			ResultsChan: results,
 		}
+
+		pR.wokerPool.AddTask(task)
 
 		index++
 		id += 2
 	}
 
+	for i := 0; i < items; i++ {
+		err := <-results
+		if err.Err != nil {
+			return nil, err.Err
+		}
+	}
+
 	pokemons = utils.CleanPokemonsResponse(pokemons)
 
 	return pokemons, nil
-}
-
-func addPokemonWithIDFormCSVFileToArrayAtIndex(id int, fileName string, pokemons []entity.Pokemon, index int) error {
-	pokemon, err := utils.FindPokemonDataFromCSVFile(fileName, id)
-	if err != nil {
-		return err
-	}
-
-	pokemons[index] = *pokemon
-	return nil
 }
 
 func (pR *pokemonRepository) AddNewPokemons(newPokemons []string) ([]entity.Pokemon, error) {
