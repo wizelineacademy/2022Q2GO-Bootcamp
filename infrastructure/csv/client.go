@@ -21,15 +21,35 @@ const (
 )
 
 type Client struct {
-	path string
+	path    string
+	idIndex int
 }
 
 func NewCSVClient(filePath string) *Client {
-	// TODO add index dynamically
-	getCSVReader(filePath)
-	return &Client{
-		path: filePath,
+
+	id, err := getIdIndex(filePath)
+	if err != nil {
+		log.Fatalf("failed reading file: %s", err)
 	}
+	return &Client{
+		path:    filePath,
+		idIndex: id,
+	}
+}
+
+func getIdIndex(path string) (int, error) {
+	csvClient := getCSVReader(path)
+	records, err := csvClient.ReadAll()
+	if err != nil {
+		log.Fatalf("failed reading file: %s", err)
+	}
+
+	for i, val := range records[0] {
+		if val == "id" {
+			return i, nil
+		}
+	}
+	return -1, fmt.Errorf("id not found")
 }
 
 func getCSVReader(filePath string) *csv.Reader {
@@ -58,13 +78,13 @@ func (c Client) FindBoardGame(id int) (*boardgame.BoardGame, error) {
 		return nil, err
 	}
 
-	record, err := getBoardGame(id, data)
+	record, err := c.findItemByID(id, data)
 	if err != nil {
 		return nil, err
 	}
 
 	return &boardgame.BoardGame{
-		ID:          record[idI],
+		ID:          record[c.idIndex],
 		Name:        record[nameI],
 		Description: record[descriptionI],
 		MinPlayers:  record[minPlayersI],
@@ -96,31 +116,30 @@ func (c Client) GetAllPokemon() ([]pokemon.Pokemon, error) {
 
 func (c Client) AddPokemon(pokemon *pokemon.Pokemon) error {
 	writer := getCSVWriter(c.path)
-	/*
-		reader := getCSVReader(c.path)
+	reader := getCSVReader(c.path)
 
-		records, err := reader.ReadAll()
-		//TODO improve error handling
-		if err != nil {
-			return err
-		}
-	*/
-	// records = append(records, []string{strconv.Itoa(pokemon.ID), pokemon.Name})
-	// TODO avoid duplicates
-	if err := writer.Write([]string{strconv.Itoa(pokemon.ID), pokemon.Name}); err != nil {
+	records, err := reader.ReadAll()
+	if err != nil {
+		return err
+	}
+	pkmn, err := c.findItemByID(pokemon.ID, records)
+	if pkmn != nil {
+		log.Println("pokemon already exists")
+		return nil
+	}
+	if err = writer.Write([]string{strconv.Itoa(pokemon.ID), pokemon.Name}); err != nil {
 		return err
 	}
 	writer.Flush()
-
 	return nil
 }
 
-func getBoardGame(id int, data [][]string) ([]string, error) {
+func (c Client) findItemByID(id int, data [][]string) ([]string, error) {
 	d := data
 	for _, record := range d[1:] {
-		idbg, err := strconv.Atoi(record[idI])
+		idbg, err := strconv.Atoi(record[c.idIndex])
 		if err != nil {
-			// TODO log error for invalid entries
+			log.Println("not valid ID")
 			continue
 		}
 		if idbg == id {

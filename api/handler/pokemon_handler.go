@@ -1,23 +1,23 @@
 package handler
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/esvarez/go-api/internal/pokemon"
-	errs "github.com/esvarez/go-api/pkg/error"
 	"github.com/esvarez/go-api/pkg/web"
 
 	"github.com/gorilla/mux"
 )
 
 const (
-	pokemonID      = "pokemon_id"
-	items          = "items"
-	tpe            = "type"
-	itemsPerWorker = "items_per_workers"
+	pokemonID           = "pokemon_id"
+	items               = "items"
+	tpe                 = "type"
+	itemsPerWorker      = "items_per_workers"
+	defaultItems        = 5
+	defaultItemsWorkers = 1
 )
 
 var (
@@ -45,15 +45,8 @@ func (p PokemonHandler) findPokemon() http.Handler {
 
 		poke, err := p.pokemonService.FindByID(params[pokemonID])
 		if err != nil {
-			var status web.AppError
 			log.Printf("error getting pokemon: %v", err)
-			switch {
-			case errors.Is(err, errs.ErrNotFound):
-				status = web.ResourceNotFoundError
-			default:
-				status = web.InternalServerError
-			}
-			status.Send(w)
+			web.ErrorResponse(err).Send(w)
 			return
 		}
 
@@ -64,14 +57,15 @@ func (p PokemonHandler) findPokemon() http.Handler {
 func (p PokemonHandler) getPokemon() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		params := r.URL.Query()
-		if val, ok := params[tpe]; ok {
-			if _, ok := validTypes[val[0]]; !ok {
-				log.Println("invalid type", val[0])
-				web.BadRequestError.Send(w)
-				return
-			}
-		} else {
+		if _, ok := params[tpe]; !ok {
 			log.Println("no type")
+			web.BadRequestError.Send(w)
+			return
+
+		}
+
+		if val, ok := validTypes[params[tpe][0]]; !ok {
+			log.Println("invalid type", val)
 			web.BadRequestError.Send(w)
 			return
 		}

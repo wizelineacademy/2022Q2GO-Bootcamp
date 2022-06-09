@@ -1,13 +1,11 @@
 package handler
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/esvarez/go-api/internal/boardgame"
-	errs "github.com/esvarez/go-api/pkg/error"
 	"github.com/esvarez/go-api/pkg/web"
 
 	"github.com/gorilla/mux"
@@ -40,15 +38,8 @@ func (b BoardGameHandler) findBoardGameByID() http.Handler {
 		}
 		bGame, err := b.BoardGameService.FindByID(id)
 		if err != nil {
-			var status web.AppError
 			log.Printf("error getting boardgame: %v", err)
-			switch {
-			case errors.Is(err, errs.ErrNotFound):
-				status = web.ResourceNotFoundError
-			default:
-				status = web.InternalServerError
-			}
-			status.Send(w)
+			web.ErrorResponse(err).Send(w)
 			return
 		}
 
