@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook/errorhandler"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/service"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
 	"github.com/labstack/echo"
 )
 
@@ -14,11 +14,9 @@ type resource struct {
 	service service.PokemonService
 }
 
-func (r resource) GetItems(c echo.Context) error {
+func (r resource) GetPokemonById(c echo.Context) error {
 	log.Println("Get infos about pokemons")
-	// pokemon := services.RetrievePokemon()
-	// c.JSON(http.StatusCreated, pokemon)
-	// return nil
+
 	_, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
@@ -26,7 +24,7 @@ func (r resource) GetItems(c echo.Context) error {
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
-	client, err := r.service.FindPokemon(c.Request.Context(), c.Param("id"))
+	client, err := r.service.FindPokemon(c, c.Param("id"))
 	if err != nil {
 		log.Println("Error")
 		return errorhandler.ErrFailedDependency
@@ -35,24 +33,24 @@ func (r resource) GetItems(c echo.Context) error {
 	return c.JSON(http.StatusOK, client)
 }
 
-func GetPokemonConcurrent(c echo.Context) error {
-	// noItemsString := c.QueryParam("items")
-	// noItems, err := strconv.Atoi(noItemsString)
-	// if err != nil {
-	// 	return errorhandler.ErrSomeFieldAreNotValid
-	// }
+// func GetPokemonConcurrent(c echo.Context) error {
+// 	// noItemsString := c.QueryParam("items")
+// 	// noItems, err := strconv.Atoi(noItemsString)
+// 	// if err != nil {
+// 	// 	return errorhandler.ErrSomeFieldAreNotValid
+// 	// }
 
-	// noItemsPerWorkersString := c.QueryParam("items_per_workers")
-	// noItemsPerWorkers, err := strconv.Atoi(noItemsPerWorkersString)
-	// if err != nil {
-	// 	return errorhandler.ErrSomeFieldAreNotValid
-	// }
+// 	// noItemsPerWorkersString := c.QueryParam("items_per_workers")
+// 	// noItemsPerWorkers, err := strconv.Atoi(noItemsPerWorkersString)
+// 	// if err != nil {
+// 	// 	return errorhandler.ErrSomeFieldAreNotValid
+// 	// }
 
-	// f1, _ := os.Open(hook.Getcwd())
-	// defer f1.Close()
+// 	// f1, _ := os.Open(hook.Getcwd())
+// 	// defer f1.Close()
 
-	// algo := repository.ConcuRSwWP(f1, noItemsPerWorkers)
-	// cer := algo[:noItems]
+// 	// algo := repository.ConcuRSwWP(f1, noItemsPerWorkers)
+// 	// cer := algo[:noItems]
 
-	// return c.JSON(http.StatusOK, cer)
-}
+// 	// return c.JSON(http.StatusOK, cer)
+// }

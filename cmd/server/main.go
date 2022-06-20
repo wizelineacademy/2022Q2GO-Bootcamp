@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
 	"github.com/labstack/echo"
@@ -18,7 +18,7 @@ func main() {
 
 	//set custom binder to validate payloads
 	bi := hook.NewCustomBinderWithValidation()
-	g := app.Group("/v1")
+	// g := app.Group("/v1")
 	app.Binder = bi
 
 	//set custom error handler
@@ -31,7 +31,7 @@ func main() {
 	}
 
 	// app.GET("/pokemon", controller.GetItems)
-	app.GET("/pokemon/:id", controller.GetPokemonById)
+	app.GET("/pokemon/:id", pokemon.GetPokemonById)
 	// app.GET("/zipcode/:id", controller.CreateCsv)
 	// app.GET("/concurrent", controller.GetPokemonConcurrent)
 

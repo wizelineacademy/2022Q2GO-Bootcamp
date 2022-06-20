@@ -1,28 +1,31 @@
 package service
 
 import (
-	"context"
+	"encoding/csv"
 	"fmt"
+	"io"
+	"os"
 	"sync"
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
+	"github.com/labstack/echo"
 )
 
 // PokemonService the contract of the pokemon service
 type PokemonService interface {
 	// CreatePokemon create new record Pokemon
-	CreatePokemon(ctx context.Context, Pokemon *entity.Pokemon) error
+	CreatePokemon(ctx echo.Context, Pokemon *entity.Pokemon) error
 
 	// FindPokemon gets filtered specific Pokemon
-	FindPokemon(ctx context.Context, filter *entity.Pokemon) ([]entity.Pokemon, error)
+	FindPokemon(ctx echo.Context, filter string) ([]entity.Pokemon, error)
 
-	Count(ctx context.Context) (int, error)
+	Count(ctx echo.Context) (int, error)
 }
 
 type PokemonRepo interface {
-	ReadPokemon() ([]entity.Pokemon, error)
-	WritePokemon(pokemon *entity.Pokemon) error
-	Count(ctx context.Context) (int, error)
+	ReadPokemon(ctx echo.Context) ([]entity.Pokemon, error)
+	WritePokemon(ctx echo.Context, pokemon *entity.Pokemon) error
+	Count(ctx echo.Context) (int, error)
 }
 
 type pokemonService struct {
@@ -33,11 +36,11 @@ func NewPokemonService(repo PokemonRepo) PokemonService {
 	return &pokemonService{repo: repo}
 }
 
-func (ps *pokemonService) CreatePokemon(ctx context.Context, Pokemon *entity.Pokemon) error {
+func (ps *pokemonService) CreatePokemon(ctx echo.Context, Pokemon *entity.Pokemon) error {
 	return nil
 }
 
-func (ps *pokemonService) FindPokemon(ctx context.Context, filter *entity.Pokemon) ([]entity.Pokemon, error) {
+func (ps *pokemonService) FindPokemon(ctx echo.Context, filter string) ([]entity.Pokemon, error) {
 	pokemons, err := ps.repo.ReadPokemon(ctx)
 	if err != nil {
 		return nil, err
@@ -46,20 +49,20 @@ func (ps *pokemonService) FindPokemon(ctx context.Context, filter *entity.Pokemo
 	return pokemons, nil
 }
 
-func (ps *pokemonService) Count(ctx context.Context) (int, error) {
+func (ps *pokemonService) Count(ctx echo.Context) (int, error) {
 	return ps.repo.Count(ctx)
 }
 
 var mu sync.Mutex
 
 // with Worker pools
-// func ConcuRSwWP(f *os.File, typeP string, items int, itemsPerWorker int) []model.Pokemon {
+// func ConcuRSwWP(f *os.File, typeP string, items int, itemsPerWorker int) []entity.Pokemon {
 func ConcuRSwWP(f *os.File, itemsPerWorker int) []entity.Pokemon {
 	fcsv := csv.NewReader(f)
-	rs := make([]model.Pokemon, 0)
+	rs := make([]entity.Pokemon, 0)
 	numWps := itemsPerWorker
 	jobs := make(chan []string, numWps)
-	res := make(chan *model.Pokemon)
+	res := make(chan *entity.Pokemon)
 
 	var wg sync.WaitGroup
 	worker := func(jobs <-chan []string, results chan<- *entity.Pokemon) {

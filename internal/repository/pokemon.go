@@ -2,26 +2,26 @@ package repository
 
 import (
 	"bufio"
-	"context"
 	"encoding/csv"
 	"io"
 	"log"
 	"os"
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
+	"github.com/labstack/echo"
 )
 
 type PokemonRepo interface {
 
 	// ReadPokemon reads and parse all pokemon records from
 	// the data csv file
-	ReadPokemon(ctx context.Context) ([]entity.Pokemon, error)
+	ReadPokemon(ctx echo.Context) ([]entity.Pokemon, error)
 
 	// WritePokemon writes new record to the data csv file
-	WritePokemon(ctx context.Context, pokemon *entity.Pokemon) error
+	WritePokemon(ctx echo.Context, pokemon *entity.Pokemon) error
 
 	// Count returns the number of albums.
-	Count(ctx context.Context) (int, error)
+	Count(ctx echo.Context) (int, error)
 }
 
 // pokemonRepo the pokemon repository implementation struct
@@ -35,7 +35,7 @@ func NewPokemonRepo(file string) PokemonRepo {
 
 // IMPLEMENTATION -------------------
 
-func (pr *pokemonRepo) ReadPokemon(ctx context.Context) ([]entity.Pokemon, error) {
+func (pr *pokemonRepo) ReadPokemon(ctx echo.Context) ([]entity.Pokemon, error) {
 	log.Println()
 	var pokemons []entity.Pokemon
 
@@ -70,13 +70,13 @@ func (pr *pokemonRepo) ReadPokemon(ctx context.Context) ([]entity.Pokemon, error
 	return pokemons, nil
 }
 
-func (*pokemonRepo) WritePokemon(ctx context.Context, pokemon *entity.Pokemon) error {
+func (*pokemonRepo) WritePokemon(ctx echo.Context, pokemon *entity.Pokemon) error {
 	log.Println()
 	return nil
 }
 
 // Count returns the number of the album records in the database.
-func (pr *pokemonRepo) Count(ctx context.Context) (int, error) {
+func (pr *pokemonRepo) Count(ctx echo.Context) (int, error) {
 	openfile, err := os.Open(pr.filePath)
 	if err != nil {
 		return 0, err
