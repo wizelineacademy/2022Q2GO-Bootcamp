@@ -5,7 +5,8 @@ import (
 	"os"
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller"
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/pkg/errorhandler"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
 	"github.com/labstack/echo"
 )
 
