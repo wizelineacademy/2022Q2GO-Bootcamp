@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/krmirandas/2022Q2GO-Bootcamp/V2/internal/entity"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
 )
 
 type PokemonRepo interface {

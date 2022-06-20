@@ -6,32 +6,53 @@ import (
 	"strconv"
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook/errorhandler"
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/services"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/service"
 	"github.com/labstack/echo"
 )
 
-func GetItems(c echo.Context) error {
-	log.Println("Get infos about pokemons")
-	pokemon := services.RetrievePokemon()
-	c.JSON(http.StatusCreated, pokemon)
-	return nil
+type resource struct {
+	service service.PokemonService
 }
 
-func GetPokemonById(c echo.Context) error {
-	//first check is id valid or not
+func (r resource) GetItems(c echo.Context) error {
+	log.Println("Get infos about pokemons")
+	// pokemon := services.RetrievePokemon()
+	// c.JSON(http.StatusCreated, pokemon)
+	// return nil
 	_, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		log.Println("Error")
-
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
-	pokemon, err1 := services.RetrievePokemonById(c.Param("id"))
-
-	if err1 != nil {
-		return errorhandler.ErrNotFoundAnyItemWithThisId
+	client, err := r.service.FindPokemon(c.Request.Context(), c.Param("id"))
+	if err != nil {
+		log.Println("Error")
+		return errorhandler.ErrFailedDependency
 	}
-	//send the pokemon
-	return c.JSON(http.StatusOK, pokemon)
+
+	return c.JSON(http.StatusOK, client)
+}
+
+func GetPokemonConcurrent(c echo.Context) error {
+	// noItemsString := c.QueryParam("items")
+	// noItems, err := strconv.Atoi(noItemsString)
+	// if err != nil {
+	// 	return errorhandler.ErrSomeFieldAreNotValid
+	// }
+
+	// noItemsPerWorkersString := c.QueryParam("items_per_workers")
+	// noItemsPerWorkers, err := strconv.Atoi(noItemsPerWorkersString)
+	// if err != nil {
+	// 	return errorhandler.ErrSomeFieldAreNotValid
+	// }
+
+	// f1, _ := os.Open(hook.Getcwd())
+	// defer f1.Close()
+
+	// algo := repository.ConcuRSwWP(f1, noItemsPerWorkers)
+	// cer := algo[:noItems]
+
+	// return c.JSON(http.StatusOK, cer)
 }

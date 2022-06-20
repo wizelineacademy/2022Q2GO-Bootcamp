@@ -8,7 +8,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/labstack/echo"
 
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/hook/errorhandler"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
 )
 
 //this is custom bind function for echo to validate struct
