@@ -10,6 +10,14 @@ import (
 	"github.com/labstack/echo"
 )
 
+// RegisterHandlers sets up the routing of the HTTP handlers.
+func RegisterHandlers1(e *echo.Group, service service.PokemonService) {
+	res := resource{service}
+
+	e.GET("/pokemon/:id", res.GetPokemonById)
+	e.GET("/pokemon", res.GetPokemon)
+}
+
 type resource struct {
 	service service.PokemonService
 }
@@ -24,33 +32,21 @@ func (r resource) GetPokemonById(c echo.Context) error {
 		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
-	client, err := r.service.FindPokemon(c, c.Param("id"))
+	response, err := r.service.FindPokemonById(c.Param("id"))
 	if err != nil {
-		log.Println("Error")
 		return errorhandler.ErrFailedDependency
 	}
 
-	return c.JSON(http.StatusOK, client)
+	return c.JSON(http.StatusOK, response)
 }
 
-// func GetPokemonConcurrent(c echo.Context) error {
-// 	// noItemsString := c.QueryParam("items")
-// 	// noItems, err := strconv.Atoi(noItemsString)
-// 	// if err != nil {
-// 	// 	return errorhandler.ErrSomeFieldAreNotValid
-// 	// }
+func (r resource) GetPokemon(c echo.Context) error {
+	log.Println("Get infos about pokemons")
 
-// 	// noItemsPerWorkersString := c.QueryParam("items_per_workers")
-// 	// noItemsPerWorkers, err := strconv.Atoi(noItemsPerWorkersString)
-// 	// if err != nil {
-// 	// 	return errorhandler.ErrSomeFieldAreNotValid
-// 	// }
+	_, err := r.service.FindPokemon()
+	if err != nil {
+		return errorhandler.ErrFailedDependency
+	}
 
-// 	// f1, _ := os.Open(hook.Getcwd())
-// 	// defer f1.Close()
-
-// 	// algo := repository.ConcuRSwWP(f1, noItemsPerWorkers)
-// 	// cer := algo[:noItems]
-
-// 	// return c.JSON(http.StatusOK, cer)
-// }
+	return c.JSON(204, nil)
+}

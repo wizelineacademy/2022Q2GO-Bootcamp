@@ -1,31 +1,27 @@
 package service
 
 import (
-	"encoding/csv"
-	"fmt"
-	"io"
-	"os"
-	"sync"
-
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
-	"github.com/labstack/echo"
 )
 
 // PokemonService the contract of the pokemon service
 type PokemonService interface {
 	// CreatePokemon create new record Pokemon
-	CreatePokemon(ctx echo.Context, Pokemon *entity.Pokemon) error
+	// CreatePokemon(Pokemon *entity.Pokemon) error
 
 	// FindPokemon gets filtered specific Pokemon
-	FindPokemon(ctx echo.Context, filter string) ([]entity.Pokemon, error)
+	FindPokemon() ([]entity.Pokemon, error)
 
-	Count(ctx echo.Context) (int, error)
+	FindPokemonById(filter string) (entity.Pokemon, error)
+
+	Count() (int, error)
 }
 
 type PokemonRepo interface {
-	ReadPokemon(ctx echo.Context) ([]entity.Pokemon, error)
-	WritePokemon(ctx echo.Context, pokemon *entity.Pokemon) error
-	Count(ctx echo.Context) (int, error)
+	ReadPokemon() ([]entity.Pokemon, error)
+	ReadOnePokemon(id string) (entity.Pokemon, error)
+	// WritePokemon(pokemon *entity.Pokemon) error
+	Count() (int, error)
 }
 
 type pokemonService struct {
@@ -36,12 +32,12 @@ func NewPokemonService(repo PokemonRepo) PokemonService {
 	return &pokemonService{repo: repo}
 }
 
-func (ps *pokemonService) CreatePokemon(ctx echo.Context, Pokemon *entity.Pokemon) error {
-	return nil
-}
+// func (ps *pokemonService) CreatePokemon(Pokemon *entity.Pokemon) error {
+// 	return nil
+// }
 
-func (ps *pokemonService) FindPokemon(ctx echo.Context, filter string) ([]entity.Pokemon, error) {
-	pokemons, err := ps.repo.ReadPokemon(ctx)
+func (ps *pokemonService) FindPokemon() ([]entity.Pokemon, error) {
+	pokemons, err := ps.repo.ReadPokemon()
 	if err != nil {
 		return nil, err
 	}
@@ -49,87 +45,15 @@ func (ps *pokemonService) FindPokemon(ctx echo.Context, filter string) ([]entity
 	return pokemons, nil
 }
 
-func (ps *pokemonService) Count(ctx echo.Context) (int, error) {
-	return ps.repo.Count(ctx)
+func (ps *pokemonService) FindPokemonById(filter string) (entity.Pokemon, error) {
+	pokemon, err := ps.repo.ReadOnePokemon(filter)
+	if err != nil {
+		return pokemon, err
+	}
+
+	return pokemon, nil
 }
 
-var mu sync.Mutex
-
-// with Worker pools
-// func ConcuRSwWP(f *os.File, typeP string, items int, itemsPerWorker int) []entity.Pokemon {
-func ConcuRSwWP(f *os.File, itemsPerWorker int) []entity.Pokemon {
-	fcsv := csv.NewReader(f)
-	rs := make([]entity.Pokemon, 0)
-	numWps := itemsPerWorker
-	jobs := make(chan []string, numWps)
-	res := make(chan *entity.Pokemon)
-
-	var wg sync.WaitGroup
-	worker := func(jobs <-chan []string, results chan<- *entity.Pokemon) {
-		for {
-			select {
-			case job, ok := <-jobs:
-				if !ok {
-					return
-				}
-				results <- ParseStruct(job)
-			}
-		}
-	}
-
-	// init workers
-	for w := 0; w < numWps; w++ {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-			worker(jobs, res)
-		}()
-	}
-
-	go func() {
-		for w := 0; w < numWps; w++ {
-			rStr, err := fcsv.Read()
-			if err == io.EOF {
-				break
-			}
-			if err != nil {
-				fmt.Println("ERROR: ", err.Error())
-				break
-			}
-			jobs <- rStr
-		}
-		close(jobs) // close jobs to signal workers that no more job are incoming.
-	}()
-
-	go func() {
-		wg.Wait()
-		close(res) // when you close(res) it breaks the below loop.
-	}()
-
-	for r := range res {
-		// fmt.Println(*r)
-		rs = append(rs, *r)
-	}
-
-	return rs
-
-}
-
-func ParseStruct(data []string) *entity.Pokemon {
-
-	return &entity.Pokemon{
-		ID:         data[0],
-		Name:       data[1],
-		Type1:      data[2],
-		Type2:      data[3],
-		Total:      data[4],
-		HP:         data[5],
-		Attack:     data[6],
-		Defense:    data[7],
-		SpAtk:      data[8],
-		SpDef:      data[9],
-		Speed:      data[10],
-		Generation: data[11],
-		Legendary:  data[12],
-	}
+func (ps *pokemonService) Count() (int, error) {
+	return ps.repo.Count()
 }

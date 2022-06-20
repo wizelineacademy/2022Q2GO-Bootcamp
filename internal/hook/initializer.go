@@ -3,8 +3,6 @@ package hook
 import (
 	"fmt"
 	"os"
-
-	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
 )
 
 func Getcwd() string {
@@ -17,21 +15,4 @@ func Getcwd() string {
 	dataFilePath := fmt.Sprintf("%s/data/data.csv", pwd)
 
 	return dataFilePath
-}
-
-var Pokemonss []entity.Pokemon
-
-func init() {
-	//Pokemons
-	fmt.Println(Getcwd())
-	// data, err := repository.ReadCSVFromUrl(Getcwd())
-
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// // I dont understand yet why a global var works with = and not with :=
-	// Pokemonss = append(data)
-
-	fmt.Println("Loading", len(Pokemonss), "Pokemons")
 }

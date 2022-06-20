@@ -17,21 +17,12 @@ type Pokemon struct {
 }
 
 type PokemonInfo struct {
-	ID                     string `json:"id" validate:"required"`
+	ID                     int    `json:"id" validate:"required"`
 	Name                   string `json:"name" validate:"required"`
-	BaseExperience         string `json:"base_experience" validate:"required"`
-	Height                 string `json:"is_default" validate:"required"`
-	IsDefault              string `json:"total" validate:"required"`
-	Order                  string `json:"order" validate:"required"`
-	Weight                 string `json:"weight" validate:"required"`
-	Abilities              string `json:"abilities" validate:"required"`
-	Forms                  string `json:"forms" validate:"required"`
-	GameIndices            string `json:"game_indices" validate:"required"`
-	HeldItems              string `json:"held_items" validate:"required"`
+	BaseExperience         int    `json:"base_experience" validate:"required"`
+	Height                 int    `json:"height" validate:"required"`
+	IsDefault              bool   `json:"is_default" validate:"required"`
+	Order                  int    `json:"order" validate:"required"`
+	Weight                 int    `json:"weight" validate:"required"`
 	LocationAreaEncounters string `json:"location_area_encounters" validate:"required"`
-	PastTypes              string `json:"past_types" validate:"required"`
-	Sprites                string `json:"sprites" validate:"required"`
-	Species                string `json:"species" validate:"required"`
-	Stats                  string `json:"stats" validate:"required"`
-	Types                  string `json:"types" validate:"required"`
 }
