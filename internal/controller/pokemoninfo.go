@@ -72,6 +72,11 @@ func (r resource2) CreatePokemonConcu(c echo.Context) error {
 	}
 
 	algo := r.service.CreatePokemonConcu(noItemsPerWorkers)
+
+	if len(algo) < noItems {
+		return errorhandler.ErrSomeFieldAreNotValid
+	}
+
 	cer := algo[:noItems]
 
 	return c.JSON(http.StatusOK, cer)

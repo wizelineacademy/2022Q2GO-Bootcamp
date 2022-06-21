@@ -6,9 +6,6 @@ import (
 
 // PokemonService the contract of the pokemon service
 type PokemonService interface {
-	// CreatePokemon create new record Pokemon
-	// CreatePokemon(Pokemon *entity.Pokemon) error
-
 	// FindPokemon gets filtered specific Pokemon
 	FindPokemon() ([]entity.Pokemon, error)
 
@@ -20,7 +17,6 @@ type PokemonService interface {
 type PokemonRepo interface {
 	ReadPokemon() ([]entity.Pokemon, error)
 	ReadOnePokemon(id string) (entity.Pokemon, error)
-	// WritePokemon(pokemon *entity.Pokemon) error
 	Count() (int, error)
 }
 
@@ -31,10 +27,6 @@ type pokemonService struct {
 func NewPokemonService(repo PokemonRepo) PokemonService {
 	return &pokemonService{repo: repo}
 }
-
-// func (ps *pokemonService) CreatePokemon(Pokemon *entity.Pokemon) error {
-// 	return nil
-// }
 
 func (ps *pokemonService) FindPokemon() ([]entity.Pokemon, error) {
 	pokemons, err := ps.repo.ReadPokemon()

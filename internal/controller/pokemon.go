@@ -43,10 +43,10 @@ func (r resource) GetPokemonById(c echo.Context) error {
 func (r resource) GetPokemon(c echo.Context) error {
 	log.Println("Get infos about pokemons")
 
-	_, err := r.service.FindPokemon()
+	response, err := r.service.FindPokemon()
 	if err != nil {
 		return errorhandler.ErrFailedDependency
 	}
 
-	return c.JSON(204, nil)
+	return c.JSON(http.StatusOK, response)
 }

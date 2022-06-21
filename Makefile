@@ -2,11 +2,7 @@ MODULE = $(shell go list -m)
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || echo "1.0.0")
 PACKAGES := $(shell go list ./... | grep -v /vendor/)
 LDFLAGS := -ldflags "-X main.Version=${VERSION}"
-
-CONFIG_FILE ?= ./config/local.yml
-APP_DSN ?= $(shell sed -n 's/^dsn:[[:space:]]*"\(.*\)"/\1/p' $(CONFIG_FILE))
-MIGRATE := docker run -v $(shell pwd)/migrations:/migrations --network host migrate/migrate:v4.10.0 -path=/migrations/ -database "$(APP_DSN)"
-
+PROG = server
 PID_FILE := './.pid'
 FSWATCH_FILE := './fswatch.cfg'
 
@@ -51,7 +47,7 @@ build:  ## build the API server binary
 
 .PHONY: build-docker
 build-docker: ## build the API server as a docker image
-	docker build -f cmd/server/Dockerfile -t server .
+	docker build -f deployments/Dockerfile -t server .
 
 .PHONY: clean
 clean: ## remove temporary files
@@ -68,3 +64,12 @@ lint: ## run golint on all Go package
 .PHONY: fmt
 fmt: ## run "go fmt" on all Go packages
 	@go fmt $(PACKAGES)
+
+.PHONY: serve
+serve:
+	@make build;
+	./${PROG}
+
+.PHONY: kill
+kill:
+	-@killall -9 $(PROG) 2>/dev/null || true

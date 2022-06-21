@@ -52,12 +52,10 @@ func (pir *pokemonInfoRepo) WritePokemon(pokemon entity.PokemonInfo) error {
 	defer w.Flush()
 
 	// Using Write
-	fmt.Println(pokemon)
 	row := []string{strconv.Itoa(pokemon.ID), pokemon.Name, strconv.Itoa(pokemon.BaseExperience),
 		strconv.Itoa(pokemon.Height), strconv.FormatBool(pokemon.IsDefault), strconv.Itoa(pokemon.Order),
 		strconv.Itoa(pokemon.Weight), pokemon.LocationAreaEncounters}
 	if err := w.Write(row); err != nil {
-		// log.Fatalln("error writing record to file", err)
 		return err
 	}
 
@@ -119,7 +117,6 @@ func (pir *pokemonInfoRepo) ConcuRSwWP(itemsPerWorker int) []entity.PokemonInfo 
 	}()
 
 	for r := range res {
-		// fmt.Println(*r)
 		rs = append(rs, *r)
 	}
 

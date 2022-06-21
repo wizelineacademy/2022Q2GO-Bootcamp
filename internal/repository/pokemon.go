@@ -19,9 +19,6 @@ type PokemonRepo interface {
 
 	ReadOnePokemon(id string) (entity.Pokemon, error)
 
-	// WritePokemon writes new record to the data csv file
-	// WritePokemon(pokemon *entity.Pokemon) error
-
 	// Count returns the number of albums.
 	Count() (int, error)
 }
