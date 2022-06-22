@@ -15,7 +15,7 @@ require (
 	github.com/labstack/gommon v0.3.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/spf13/viper v1.12.0 // indirect
-	github.com/stretchr/testify v1.7.2
+	github.com/stretchr/testify v1.7.4
 	github.com/subosito/gotenv v1.4.0 // indirect
 	github.com/swaggo/http-swagger v1.3.0 // indirect
 	github.com/swaggo/swag v1.8.3
