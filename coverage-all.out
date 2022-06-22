@@ -6,7 +6,7 @@ github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:40.2,40.4
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:30.16,33.3 2 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:36.16,38.3 1 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:43.52,47.16 3 0
-github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:51.2,51.25 1 0
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:51.2,51.40 1 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemon.go:47.16,49.3 1 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:18.75,23.2 3 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:29.56,32.16 2 0
@@ -20,12 +20,14 @@ github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:48.16
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:54.17,56.3 1 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:61.61,64.16 3 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:68.2,70.16 3 0
-github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:74.2,77.35 3 0
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:74.2,76.25 2 0
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:80.2,82.35 2 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:64.16,66.3 1 0
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:70.16,72.3 1 0
-github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:27.57,29.2 1 1
-github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:31.67,33.16 2 1
-github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:37.2,37.22 1 0
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/controller/pokemoninfo.go:76.25,78.3 1 0
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:27.57,29.2 1 5
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:31.67,33.16 2 2
+github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:37.2,37.22 1 1
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:33.16,35.3 1 1
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:40.82,42.16 2 2
 github.com/krmirandas/2022Q2GO-Bootcamp/internal/service/pokemon.go:46.2,46.21 1 1
