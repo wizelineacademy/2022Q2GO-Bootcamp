@@ -7,6 +7,7 @@ import (
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/service"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/pagination"
 	"github.com/labstack/echo"
 )
 
@@ -23,18 +24,18 @@ type resource struct {
 }
 
 func (r resource) GetPokemonById(c echo.Context) error {
-	log.Println("Get infos about pokemons")
+	log.Println("Get infos about pokemons by Id")
 
 	_, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
 		log.Println("Error")
-		return errorhandler.ErrNotFoundAnyItemWithThisId
+		return errorhandler.ErrNotValidItemId
 	}
 
 	response, err := r.service.FindPokemonById(c.Param("id"))
 	if err != nil {
-		return errorhandler.ErrFailedDependency
+		return errorhandler.ErrNotFoundAnyItemWithThisId
 	}
 
 	return c.JSON(http.StatusOK, response)
@@ -42,8 +43,12 @@ func (r resource) GetPokemonById(c echo.Context) error {
 
 func (r resource) GetPokemon(c echo.Context) error {
 	log.Println("Get infos about pokemons")
-
-	response, err := r.service.FindPokemon()
+	count, err := r.service.Count()
+	if err != nil {
+		return err
+	}
+	pages := pagination.NewFromRequest(c.Request(), count)
+	response, err := r.service.FindPokemon(pages.Offset(), pages.Limit())
 	if err != nil {
 		return errorhandler.ErrFailedDependency
 	}

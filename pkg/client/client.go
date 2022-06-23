@@ -49,11 +49,5 @@ func (s *Client) GetRequest(id string) ([]byte, error) {
 		return nil, err
 	}
 
-	// var data model.ZipCodeInfo
-	// err = json.Unmarshal(bytes, &data)
-	// if err != nil {
-	// 	return nil, err
-	// }
-
 	return bytes, nil
 }

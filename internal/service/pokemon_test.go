@@ -89,6 +89,8 @@ func TestService_FindPokemonById(t *testing.T) {
 func TestService_FindPokemon(t *testing.T) {
 	var testCases = []struct {
 		name     string
+		offset   int
+		limit    int
 		response []entity.Pokemon
 		err      error
 		// Repository
@@ -97,6 +99,8 @@ func TestService_FindPokemon(t *testing.T) {
 	}{
 		{
 			"Should return array of pokemons",
+			1,
+			100,
 			[]entity.Pokemon{
 				{
 					ID:         "700",
@@ -136,6 +140,8 @@ func TestService_FindPokemon(t *testing.T) {
 		},
 		{
 			"Should throw errors",
+			1,
+			100,
 			[]entity.Pokemon(nil),
 			errCRUD,
 			[]entity.Pokemon(nil),
@@ -148,12 +154,12 @@ func TestService_FindPokemon(t *testing.T) {
 			testObj := mocks.NewPokemonRepository(t)
 
 			// setup expectations
-			testObj.On("ReadPokemon").Return(tc.repoRes, tc.repoErr)
+			testObj.On("ReadPokemon", tc.offset, tc.limit).Return(tc.repoRes, tc.repoErr)
 
 			// call the code we are testing
 			s := NewPokemonService(testObj)
 
-			res, err := s.FindPokemon()
+			res, err := s.FindPokemon(tc.offset, tc.limit)
 
 			assert.Equal(t, tc.response, res)
 			assert.Equal(t, tc.err, err)

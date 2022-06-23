@@ -20,7 +20,6 @@ func main() {
 
 	//set custom binder to validate payloads
 	bi := hook.NewCustomBinderWithValidation()
-	// g := app.Group("/v1")
 
 	app.Binder = bi
 

@@ -19,8 +19,8 @@ func (mr *mockPokemonRepo) ReadOnePokemon(id string) (entity.Pokemon, error) {
 	return arg.Get(0).(entity.Pokemon), arg.Error(1)
 }
 
-func (mr *mockPokemonRepo) ReadPokemon() ([]entity.Pokemon, error) {
-	arg := mr.Called()
+func (mr *mockPokemonRepo) ReadPokemon(offset, limit int) ([]entity.Pokemon, error) {
+	arg := mr.Called(offset, limit)
 	return arg.Get(0).([]entity.Pokemon), arg.Error(1)
 }
 

@@ -27,6 +27,7 @@ type resource2 struct {
 }
 
 func (r resource2) CreatePokemon(c echo.Context) error {
+	log.Println("Create a new pokemons in a CSV file")
 	_, err := strconv.Atoi(c.Param("id"))
 
 	if err != nil {
@@ -39,8 +40,8 @@ func (r resource2) CreatePokemon(c echo.Context) error {
 	cliente := client.NewClient(url)
 	bytes, err := cliente.GetRequest(c.Param("id"))
 	if err != nil {
-		log.Println("Error")
-		return errorhandler.ErrFailedDependency
+		log.Println("Error: ErrNotValidItemId")
+		return errorhandler.ErrNotValidItemId
 	}
 
 	var data entity.PokemonInfo
@@ -59,6 +60,7 @@ func (r resource2) CreatePokemon(c echo.Context) error {
 }
 
 func (r resource2) CreatePokemonConcu(c echo.Context) error {
+	log.Println("Read pokemons of CSV file concurrently")
 	noItemsString := c.QueryParam("items")
 	noItems, err := strconv.Atoi(noItemsString)
 	if err != nil {

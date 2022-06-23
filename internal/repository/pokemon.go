@@ -15,7 +15,7 @@ type PokemonRepo interface {
 
 	// ReadPokemon reads and parse all pokemon records from
 	// the data csv file
-	ReadPokemon() ([]entity.Pokemon, error)
+	ReadPokemon(offset, limit int) ([]entity.Pokemon, error)
 
 	ReadOnePokemon(id string) (entity.Pokemon, error)
 
@@ -75,7 +75,7 @@ func (pr *pokemonRepo) ReadOnePokemon(id string) (entity.Pokemon, error) {
 	return pokemon, nil
 }
 
-func (pr *pokemonRepo) ReadPokemon() ([]entity.Pokemon, error) {
+func (pr *pokemonRepo) ReadPokemon(offset, limit int) ([]entity.Pokemon, error) {
 	log.Println()
 	var pokemons []entity.Pokemon
 
@@ -107,7 +107,7 @@ func (pr *pokemonRepo) ReadPokemon() ([]entity.Pokemon, error) {
 		})
 	}
 
-	return pokemons, nil
+	return paginate(pokemons, offset, limit), nil
 }
 
 // Count returns the number of the album records in the database.
@@ -125,3 +125,16 @@ func (pr *pokemonRepo) Count() (int, error) {
 }
 
 /************************** FIRST DELIVERY ************************/
+
+func paginate(x []entity.Pokemon, skip int, size int) []entity.Pokemon {
+	if skip > len(x) {
+		skip = len(x)
+	}
+
+	end := skip + size
+	if end > len(x) {
+		end = len(x)
+	}
+
+	return x[skip:end]
+}

@@ -23,10 +23,23 @@ make run-live
 
 At this time, you have a RESTful API server running at `http://127.0.0.1:8080`. It provides the following endpoints:
 
-* `GET /v2/pokemon`: returns a paginated list of the pokemons
+* `GET /v2/pokemon`: returns a paginated list of the pokemons 
 * `GET /v2/pokemon/:id`: returns the detailed information of an pokemon
 * `POST /v2/pokemon/id`: creates a new pokemon in a csv file
 * `GET /v2/pokemon/:id`: returns a list of the pokemons
+
+Examples:
+```shell
+# GET /v2/pokemon`
+curl -X GET -H "Content-Type: application/json"  http://localhost:8000/v2/pokemon\?page\=1\&limit\=12
+# GET /v2/pokemon/:id
+curl -X GET -H "Content-Type: application/json"  http://localhost:8000/v2/pokemon/6 
+# POST /v2/pokemon/id
+curl -X POST -H "Content-Type: application/json"  http://localhost:8000/v2/pokemon/6
+# GET /pokemon/concurrent
+curl -X POST -H "Content-Type: application/json" http://localhost:8000/v2/pokemon/concurrent?items=6&items_per_workers=8
+
+```
 
 ## Project Layout
 
@@ -80,8 +93,6 @@ The starter kit uses the following project layout:
 │   │   └── client.go
 │   ├── errorhandler
 │   │   └── errorhandler.go
-│   ├── operationhandler
-│   │   └── operationhandler.go
 │   └── pagination
 │       └── pagination.go
 ├── README.md 
