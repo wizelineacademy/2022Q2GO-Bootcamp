@@ -61,6 +61,12 @@ func (r resource2) CreatePokemon(c echo.Context) error {
 
 func (r resource2) CreatePokemonConcu(c echo.Context) error {
 	log.Println("Read pokemons of CSV file concurrently")
+	typeString := c.QueryParam("type")
+	if len(typeString) == 0 && slice.stringInSlice(typeString, []string{"even", "odd"}) {
+		log.Println("No type parameter sent")
+		return errorhandler.ErrSomeFieldAreNotValid
+	}
+
 	noItemsString := c.QueryParam("items")
 	noItems, err := strconv.Atoi(noItemsString)
 	if err != nil {
