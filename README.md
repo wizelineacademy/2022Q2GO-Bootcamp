@@ -1,50 +1,120 @@
 
 # 2022 Q2 Go Bootcamp
 
+## Getting Started
+
+Follow [the instructions](https://golang.org/doc/install) to install Go on your computer. The kit requires **Go 1.13 or above**.
+
+[Docker](https://www.docker.com/get-started) is also needed if you want to try the kit without setting up your
+own database server. The kit requires **Docker 17.05 or higher** for the multi-stage build support.
+
+After installing Go and Docker, run the following commands to start experiencing this starter kit:
+
+```shell
+# download the starter kit
+git clone https://github.com/krmirandas/2022Q2GO-Bootcamp.git
+cd 2022Q2GO-Bootcamp
+# run the RESTful API server
+make run
+# or run the API server with live reloading, which is useful during development
+# requires fswatch (https://github.com/emcrisostomo/fswatch)
+make run-live
+```
+
+At this time, you have a RESTful API server running at `http://127.0.0.1:8080`. It provides the following endpoints:
+
+* `GET /v2/pokemon`: returns a paginated list of the pokemons
+* `GET /v2/pokemon/:id`: returns the detailed information of an pokemon
+* `POST /v2/pokemon/id`: creates a new pokemon in a csv file
+* `GET /v2/pokemon/:id`: returns a list of the pokemons
+
+## Project Layout
+
+The starter kit uses the following project layout:
+ 
+```
+.
+├── api
+│   ├── docs.go
+│   ├── swagger.json
+│   └── swagger.yaml
+├── cmd                                   main applications of the project
+│   └── server
+│       └── main.go
+├── config                                configuration files for different environments
+│   ├── development.yml
+│   └── local.yml
+├── coverage-all.out
+├── coverage.out
+├── data
+│   ├── pokemonAPI.csv
+│   └── pokemon.csv
+├── deployments
+│   ├── Dockerfile
+│   └── entrypoint.sh
+├── go.mod
+├── go.sum
+├── internal                              private application and library code
+│   ├── controller
+│   │   ├── pokemon.go
+│   │   ├── pokemoninfo.go
+│   │   └── pokemon_test.go
+│   ├── entity                            entity definitions and domain logic
+│   │   └── pokemon.go
+│   ├── hook
+│   │   └── echobinder.go
+│   ├── repository
+│   │   ├── pokemon.go
+│   │   └── pokemoninfo.go
+│   └── service
+│       ├── mocks
+│       │   ├── pokemonInfoMock.go
+│       │   └── pokemonMock.go
+│       ├── pokemon.go
+│       ├── pokemoninfo.go
+│       ├── pokemoninfo_test.go
+│       └── pokemon_test.go
+├── Makefile
+├── pkg                                   public library code
+│   ├── client
+│   │   └── client.go
+│   ├── errorhandler
+│   │   └── errorhandler.go
+│   ├── operationhandler
+│   │   └── operationhandler.go
+│   └── pagination
+│       └── pagination.go
+├── README.md 
+└── test                                  helpers for testing purpose
+    └── controller.go     
+```
+
+The top level directories `cmd`, `internal`, `pkg` are commonly found in other popular Go projects, as explained in
+[Standard Go Project Layout](https://github.com/golang-standards/project-layout).
+
+Within `internal` and `pkg`, packages are structured by features in order to achieve the so-called
+[screaming architecture](https://blog.cleancoder.com/uncle-bob/2011/09/30/Screaming-Architecture.html). For example, 
+the `album` directory contains the application logic related with the album feature. 
+
+Within each feature package, code are organized in layers (API, service, repository), following the dependency guidelines
+as described in the [clean architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+
+## Deployment
+
+The application can be run as a docker container. You can use `make build-docker` to build the application 
+into a docker image. The docker container starts with the `deployment/entryscript.sh` script which reads 
+the `APP_ENV` environment variable to determine which configuration file to use. 
+
+You can also run `make build` to build an executable binary named `server`. Then start the API server using the following
+command,
+
+```shell
+./server
+```
+
 ## Description
 
 Project for the Go Bootcamp from Wizeline.
-
-### Features
-Features included:
-- Go
-
-## Requirements:
-
-- Go --Version 1.7
-
-## Installation
-1. Clone or download de repository:
-    ```
-    $ git clone https://github.com//krmirandas/2022Q2GO-Bootcamp
-    ``` 
-## Basic Usage
-You can test with postman or web browser.
-
-## Enpoints
-
-Base url:
-
-http://localhost:8000/
-
-- /pokemon
-- /pokemon/:id
-- /zipcode/:id
-- /concurrent Requires 2 Query parameters items(int), items_per_worker(int)
-	 
-
-## Unit test
-   ```bash
-    $ cd 22022Q2GO-Bootcamp/test
-    $ go test -v
-  ```
-## What's missing ?
-There is a lot of things that I could do to improve this API. 
-Some that I have identified are:
-
-* Refactoring
-* Improve logging
-
 ## Introduction
 
 Thank you for participating in the GO Bootcamp course!
