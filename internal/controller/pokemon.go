@@ -24,7 +24,7 @@ type resource struct {
 }
 
 func (r resource) GetPokemonById(c echo.Context) error {
-	log.Println("Get infos about pokemons by Id")
+	log.Println("Get infos about pokemons by ID")
 
 	_, err := strconv.Atoi(c.Param("id"))
 

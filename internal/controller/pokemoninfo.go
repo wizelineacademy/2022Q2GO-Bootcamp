@@ -11,6 +11,7 @@ import (
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/service"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/client"
 	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/errorhandler"
+	"github.com/krmirandas/2022Q2GO-Bootcamp/pkg/slice"
 	"github.com/labstack/echo"
 )
 
@@ -62,7 +63,7 @@ func (r resource2) CreatePokemon(c echo.Context) error {
 func (r resource2) CreatePokemonConcu(c echo.Context) error {
 	log.Println("Read pokemons of CSV file concurrently")
 	typeString := c.QueryParam("type")
-	if len(typeString) == 0 && slice.stringInSlice(typeString, []string{"even", "odd"}) {
+	if typeString != "" && !slice.StringInSlice(typeString, []string{"even", "odd"}) {
 		log.Println("No type parameter sent")
 		return errorhandler.ErrSomeFieldAreNotValid
 	}

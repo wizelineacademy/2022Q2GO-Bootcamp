@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"errors"
 	"io"
-	"log"
 	"os"
 
 	"github.com/krmirandas/2022Q2GO-Bootcamp/internal/entity"
@@ -76,7 +75,6 @@ func (pr *pokemonRepo) ReadOnePokemon(id string) (entity.Pokemon, error) {
 }
 
 func (pr *pokemonRepo) ReadPokemon(offset, limit int) ([]entity.Pokemon, error) {
-	log.Println()
 	var pokemons []entity.Pokemon
 
 	//ID,Name,Type1,Type2,Total,HP,Attack,Defense,SpAtk,SpDef,Speed,Generation,Legendary
@@ -110,7 +108,7 @@ func (pr *pokemonRepo) ReadPokemon(offset, limit int) ([]entity.Pokemon, error) 
 	return paginate(pokemons, offset, limit), nil
 }
 
-// Count returns the number of the album records in the database.
+// Count returns the number of the album records in the database
 func (pr *pokemonRepo) Count() (int, error) {
 	openfile, err := os.Open(pr.filePath)
 	if err != nil {

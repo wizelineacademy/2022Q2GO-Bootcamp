@@ -15,6 +15,8 @@ After installing Go and Docker, run the following commands to start experiencing
 git clone https://github.com/krmirandas/2022Q2GO-Bootcamp.git
 cd 2022Q2GO-Bootcamp
 # run the RESTful API server
+make serve
+# run the RESTful API server
 make run
 # or run the API server with live reloading, which is useful during development
 # requires fswatch (https://github.com/emcrisostomo/fswatch)
@@ -37,7 +39,7 @@ curl -X GET -H "Content-Type: application/json"  http://localhost:8000/v2/pokemo
 # POST /v2/pokemon/id
 curl -X POST -H "Content-Type: application/json"  http://localhost:8000/v2/pokemon/6
 # GET /pokemon/concurrent
-curl -X POST -H "Content-Type: application/json" http://localhost:8000/v2/pokemon/concurrent?items=6&items_per_workers=8
+curl -X POST -H "Content-Type: application/json" http://localhost:8000/v2/pokemon/concurrent?items=6&items_per_workers=8&type=even
 
 ```
 
@@ -120,7 +122,7 @@ You can also run `make build` to build an executable binary named `server`. Then
 command,
 
 ```shell
-./server
+make test
 ```
 
 ## Description
