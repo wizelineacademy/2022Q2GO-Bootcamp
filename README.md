@@ -122,7 +122,7 @@ You can also run `make build` to build an executable binary named `server`. Then
 command,
 
 ```shell
-make test
+./server
 ```
 
 ## Description

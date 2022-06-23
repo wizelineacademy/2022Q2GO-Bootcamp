@@ -57,14 +57,6 @@ clean: ## remove temporary files
 version: ## display the version of the API server
 	@echo $(VERSION)
 
-.PHONY: lint
-lint: ## run golint on all Go package
-	@golint $(PACKAGES)
-
-.PHONY: fmt
-fmt: ## run "go fmt" on all Go packages
-	@go fmt $(PACKAGES)
-
 .PHONY: serve
 serve:
 	@make build;
